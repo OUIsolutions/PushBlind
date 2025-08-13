@@ -8,7 +8,7 @@ function PushBlind.add_package(props)
 
     if possible_git_dir then
         set_prop("pushblind.package_dir."..props.name,packages_dir)
-        dtw.write_file(packages_dir.."name.txt",props.name)
+        dtw.write_file(packages_dir.."/name.txt",props.name)
         set_prop("pushblind.git_dir."..props.name,possible_git_dir)
         set_prop("pushblind.package_file."..props.name,props.filename)
         if not props.force then
@@ -19,12 +19,13 @@ function PushBlind.add_package(props)
     os.execute("mkdir -p "..packages_dir)
 
     os.execute("cd "..packages_dir.." && git clone https://github.com/"..props.package_name..".git")
-    local packages_dir = dtw.list_dirs(packages_dir,true)[1]
-    if not packages_dir then
+    local package_git = dtw.list_dirs(packages_dir,true)[1]
+    if not package_git then
         return "not_exist"
     end
-    dtw.write_file(packages_dir.."name.txt",props.name)
-    set_prop("pushblind.git_dir."..props.name,packages_dir)
+    dtw.write_file(packages_dir.."/name.txt",props.name)
+    set_prop("pushblind.package_dir."..props.name,packages_dir)
+    set_prop("pushblind.git_dir."..props.name,package_git)
     set_prop("pushblind.package_file."..props.name,props.filename)
     return "cloned"
 end
@@ -35,7 +36,7 @@ function PushBlind.list_packages()
     local packages_dirs = dtw.list_dirs(packages_dir,true)
     local all = {}
     for i =1,#packages_dirs do
-        local current = packages_dirs[i]
+        local current = packages_dirs[i]        
         local name_file = current.."name.txt"
         if dtw.isfile(name_file) then
             local name = dtw.load_file(name_file)
@@ -46,6 +47,7 @@ function PushBlind.list_packages()
 end
 function PushBlind.install_package(name)
     PushBlind.running_dir = get_prop("pushblind.git_dir."..name)
+    
     if not PushBlind.running_dir then        
         return false
     end
