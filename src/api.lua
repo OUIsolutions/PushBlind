@@ -7,12 +7,6 @@ function PushBlind.add_package(props)
     local possible_git_dir = dtw.list_dirs(packages_dir,true)[1]
 
     if possible_git_dir then
-        set_prop("pushblind.package_dir."..props.name,packages_dir)
-        local names_dir = packages_dir.."/names/"
-        local name_sha = dtw.generate_sha(props.name)
-        dtw.write_file(names_dir..name_sha..".txt",props.name)
-        set_prop("pushblind.git_dir."..props.name,possible_git_dir)
-        set_prop("pushblind.package_file."..props.name,props.filename)
         if not props.force then
             return "already_exists"
         end
@@ -55,7 +49,7 @@ function PushBlind.list_packages()
 end
 function PushBlind.install_package(name)
     PushBlind.running_dir = get_prop("pushblind.git_dir."..name)
-    
+    print("running_dir ",PushBlind.running_dir)
     if not PushBlind.running_dir then        
         return false
     end
