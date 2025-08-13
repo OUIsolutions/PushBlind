@@ -41,11 +41,15 @@ function PushBlind.list_packages()
     local all = {}
     for i =1,#packages_dirs do
         local current = packages_dirs[i]        
-        local name_file = current.."name.txt"
-        if dtw.isfile(name_file) then
-            local name = dtw.load_file(name_file)
-            all[#all+1] =name
-        end 
+        local names_dir = current.."/names/"
+        local name_files = dtw.list_files(names_dir,true)
+        for j = 1, #name_files do
+            local name_file = name_files[j]
+            if dtw.isfile(name_file) then
+                local name = dtw.load_file(name_file)
+                all[#all+1] =name
+            end
+        end
     end
     return all    
 end
