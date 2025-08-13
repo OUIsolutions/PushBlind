@@ -23,7 +23,9 @@ function vibescript_extension_internal_main()
      if action == "update" then
          return Push_blind_upldate_package()
      end
-
+    if action == "remove" then
+        return Push_blind_remove_package()
+    end
      print("running action "..action)
 end 
 

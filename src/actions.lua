@@ -63,3 +63,18 @@ function  Push_blind_upldate_package()
         return 1
     end 
 end
+function Push_blind_remove_package()
+    local name = argv.get_next_unused()
+    if not name then
+        print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
+        return 1
+    end
+    local removed = PushBlind.remove_package(name)
+    if removed == "not_exist" then
+        print(private_vibescript.RED.."Package "..name.." does not exist."..private_vibescript.RESET)
+        return 1
+    elseif removed == "removed" then
+        print(private_vibescript.GREEN.."Package "..name.." successfully removed."..private_vibescript.RESET)
+        return 0
+    end 
+end
