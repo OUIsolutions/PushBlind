@@ -50,6 +50,29 @@ function PushBlind.install_package(name)
     os.execute("cd "..PushBlind.running_dir.." && git reset --hard HEAD")
     return result   
 end
+function PushBlind.update_package(name)
+    PushBlind.running_dir = get_prop("pushblind.git_dir."..name)
+    if not PushBlind.running_dir then        
+        return false
+    end
+   
+    local filename  = get_prop("pushblind.package_file."..name)
+    if not filename then 
+        return false 
+    end 
+    PushBlind.running_file = PushBlind.running_dir..filename
+
+     if not dtw.isfile(PushBlind.running_file) then
+        return false
+    end
+
+    dofile(PushBlind.running_file)
+    os.execute("cd "..PushBlind.running_dir.." && git pull")
+    local result = update(PushBlind.running_file)    
+    os.execute("cd "..PushBlind.running_dir.." && git reset --hard HEAD")
+    return result   
+end
+
 function  PushBlind.remove_package(name)
 
     local package_dir = get_prop("pushblind.package_dir."..name)
