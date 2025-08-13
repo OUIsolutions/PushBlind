@@ -27,20 +27,14 @@ function PushBlind.add_package(props)
     return "cloned"
 end
 
-function PushBlind.install_package(name,version)
-    local home = os.getenv("HOME")
-    local formated_package_name = package_name:gsub("/", "_")
-    local packages_dir = home.."/.pushblind/packages/"..formated_package_name
-    if not dtw.exists(packages_dir) then
-        print("Package "..package_name.." not found.")
-        return false
-    end
-    local package_file = dtw.list_files(packages_dir,true)[1]
-    if not package_file then
-        print("No package file found in "..packages_dir)
-        return false
-    end
-    print("Installing package: "..package_name)
-    -- Here you would add the logic to install the package, e.g., running a script or copying files.
-    return true
+function PushBlind.install_package(name)
+    
+    PushBlind.running_dir = get_prop("pushblind.package_dir."..name)
+    local filename  = get_prop("pushblind.package_file."..name)
+    PushBlind.running_file = PushBlind.running_dir..filename
+    dofile(PushBlind.running_file)
+    local current_file = dtw.get_absolute_path(".")
+    local result = install(PushBlind.running_file, current_file)
+    --remove any dir changes 
+    os.execute("cd "..current_file.." && git reset --hard HEAD")
 end
