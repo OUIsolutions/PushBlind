@@ -13,7 +13,7 @@ function vibescript_extension_internal_main()
          return 1
      end
      if action == "add_package" then
-         return Add_package()
+         return Add_package_action()
      end
      if action == "install" then
          return Install_package()
