@@ -20,7 +20,7 @@ function PushBlind.add_package(props)
     if not package_git then
         return "not_exist"
     end
-    local names_dir = packages_dir.."/names/"
+    local names_dir = home.."/.pushblind/names/"
     local name_sha = dtw.generate_sha(props.name)
     dtw.write_file(names_dir..name_sha..".txt",props.name)
     set_prop("pushblind.package_dir."..props.name,packages_dir)
