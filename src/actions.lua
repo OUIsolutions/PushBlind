@@ -1,5 +1,12 @@
 
 function Push_blind_add_package_action()
+   
+    local git_mode = private_vibescript.get_prop("pushblind.git_mode")
+    if not git_mode then
+        print(private_vibescript.RED.."Git mode not set. Use 'https' or 'ssh'."..private_vibescript.RESET)
+        return 1
+    end
+
     local package_name = argv.get_next_unused()
     if not package_name then
         print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
