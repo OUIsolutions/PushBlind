@@ -1,7 +1,7 @@
 
 function Push_blind_add_package_action()
    
-    local git_mode = private_vibescript.get_prop("pushblind.git_mode")
+    local git_mode = get_prop("pushblind.git_mode")
     if not git_mode then
         print(private_vibescript.RED.."Git mode not set. Use 'https' or 'ssh'."..private_vibescript.RESET)
         return 1
@@ -96,5 +96,5 @@ function PushBlind_set_git_mode()
         print(private_vibescript.RED.."Invalid mode. Use 'https' or 'ssh'."..private_vibescript.RESET)
         return 1
     end
-    private_vibescript.set_prop("pushblind.git_mode", mode)
+    set_prop("pushblind.git_mode", mode)
 end 

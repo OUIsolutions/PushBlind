@@ -26,6 +26,9 @@ function vibescript_extension_internal_main()
     if action == "remove" then
         return Push_blind_remove_package()
     end
+    if action == "set_git_mode" then
+        return PushBlind_set_git_mode()
+    end
      print("running action "..action)
 end 
 
