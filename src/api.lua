@@ -15,6 +15,7 @@ function PushBlind.add_package(props)
     os.execute("mkdir -p "..packages_dir)
 
     os.execute("cd "..packages_dir.." && git clone https://github.com/"..props.package_name..".git")
+    
     local package_git = dtw.list_dirs(packages_dir,true)[1]
     if not package_git then
         return "not_exist"
