@@ -16,12 +16,22 @@ function Push_blind_add_package_action()
         return 1
     end
     local force = argv.flags_exist({ "force"})
-    PushBlind.add_package({
+    local result =PushBlind.add_package({
         package_name = package_name,
         filename = filename,
         name = name,
         force=force
     })
+    if result == "already_exists" then
+        print(private_vibescript.YELLOW.."Package "..name.." already exists. Use --force to overwrite."..private_vibescript.RESET)
+        return 0
+    elseif result == "not_exist" then
+        print(private_vibescript.RED.."Package "..package_name.." does not exist on GitHub."..private_vibescript.RESET)
+        return 1
+    elseif result == "cloned" then
+        print(private_vibescript.GREEN.."Package "..name.." successfully cloned."..private_vibescript.RESET)
+        return 0
+    end 
 
 end
 

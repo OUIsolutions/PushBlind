@@ -4,26 +4,27 @@ function PushBlind.add_package(props)
     local home = os.getenv("HOME")
     local formated_package_name = props.package_name:gsub("/", "_")
     local packages_dir = home.."/.pushblind/packages/"..formated_package_name
-    dtw.remove_any(packages_dir)
-    os.execute("mkdir -p "..packages_dir)
-    local packages_dir = dtw.list_dirs(packages_dir,true)[1]
-    if dtw.isdir(packages_dir) then
-        set_prop("pushblind.package_dir."..props.name,packages_dir)
+    local possible_package_dir = dtw.list_dirs(packages_dir,true)[1]
+
+    if possible_package_dir then
+        set_prop("pushblind.package_dir."..props.name,possible_package_dir)
         set_prop("pushblind.package_file."..props.name,props.filename)
         if not props.force then
-            return true
+            return "already_exists"
         end
     end
+    dtw.remove_any(packages_dir)
+    os.execute("mkdir -p "..packages_dir)
 
     os.execute("cd "..packages_dir.." && git clone https://github.com/"..props.package_name..".git")
     local packages_dir = dtw.list_dirs(packages_dir,true)[1]
     if not packages_dir then
-        return false
+        return "not_exist"
     end
 
     set_prop("pushblind.package_dir."..props.name,packages_dir)
     set_prop("pushblind.package_file."..props.name,props.filename)
-    return true
+    return "cloned"
 end
 
 function PushBlind.install_package(name,version)
