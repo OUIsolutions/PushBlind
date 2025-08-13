@@ -41,7 +41,14 @@ function Push_blind_add_package_action()
     end 
 
 end
-
+function PushBlind_list_packages()
+    local packages = PushBlind.list_packages()
+    for i=1,#packages do
+        local package_name = packages[i]
+        print(private_vibescript.GREEN..package_name..private_vibescript.RESET)
+    end
+    return 0
+end
 
 function  Push_blind_install_package()
     local name = argv.get_next_unused()

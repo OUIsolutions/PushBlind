@@ -15,7 +15,9 @@ function vibescript_extension_internal_main()
      if action == "add" then
          return Push_blind_add_package_action()
      end
-
+    if action == "list" then
+        return PushBlind_list_packages()
+    end
      if action == "install" then
          return Push_blind_install_package()
      end
