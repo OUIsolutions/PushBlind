@@ -9,3 +9,8 @@ darwin run_blueprint build/ --mode folder extension_build alpine_static_build wi
 ```bash
 darwin run_blueprint build/ --mode folder local_linux_build
 ```
+
+### Add Package
+```bash
+pushblind add_package user/package_name filename
+```

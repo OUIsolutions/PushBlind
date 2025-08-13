@@ -12,6 +12,10 @@ function vibescript_extension_internal_main()
          print(private_vibescript.RED.."No action provided"..private_vibescript.RESET)
          return 1
      end
+     if action == "add_package" then
+         
+         return Add_package()
+     end
      print("running action "..action)
 end 
 
