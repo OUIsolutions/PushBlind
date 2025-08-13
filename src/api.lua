@@ -1,4 +1,4 @@
-local PushBlind = {}
+PushBlind = {}
 
 function PushBlind.add_package(props)
     local home = os.getenv("HOME")

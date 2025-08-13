@@ -12,7 +12,7 @@ darwin run_blueprint build/ --mode folder local_linux_build
 
 ### Add Package
 ```bash
-pushblind add_package user/package_name filename
+pushblind add user/package_name filename
 ```
 
 ### Install 
