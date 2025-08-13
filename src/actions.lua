@@ -42,14 +42,11 @@ function  Push_blind_install_package()
         print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
         return 1
     end
-    local package_dir = get_prop("pushblind.package_dir."..name)
-    os.execute("cd "..package_dir.." && git pull")
-
-    local filename = get_prop("pushblind.package_file."..name)
-    local full_file_path = package_dir.."/"..filename
-    dofile(full_file_path)
-    local curent_dir = dtw.get_absolute_path(".")
-    install(curent_dir)
+    local installed = PushBlind.install_package(name)
+    if not installed then
+        print(private_vibescript.RED.."Failed to install package "..name..". It may not exist or be improperly formatted."..private_vibescript.RESET)
+        return 1   
+    end 
 
 end
 
@@ -60,12 +57,9 @@ function  Push_blind_upldate_package()
         print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
         return 1
     end
-    local package_dir = get_prop("pushblind.package_dir."..name)
-    os.execute("cd "..package_dir.." && git pull")
-    local filename = get_prop("pushblind.package_file."..name)
-    local full_file_path = package_dir.."/"..filename
-    dofile(full_file_path)
-    local curent_dir = dtw.get_absolute_path(".")
-    update(curent_dir)
-
+    local updated = PushBlind.update_package(name)
+    if not updated then
+        print(private_vibescript.RED.."Failed to update package "..name..". It may not exist or be improperly formatted."..private_vibescript.RESET)
+        return 1
+    end 
 end
