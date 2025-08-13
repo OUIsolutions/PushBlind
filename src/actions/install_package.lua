@@ -8,6 +8,8 @@ function  Install_package()
     local package_dir = get_prop("pushblind.package_dir."..name)
     local filename = get_prop("pushblind.package_file."..name)
     local full_file_path = package_dir.."/"..filename
-    print(full_file_path)
+    dofile(full_file_path)
+    local curent_dir = dtw.get_absolute_path(".")
+    install(curent_dir)
 
 end
