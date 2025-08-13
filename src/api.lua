@@ -52,7 +52,7 @@ function PushBlind.install_package(name)
 end
 function  PushBlind.remove_package(name)
 
-    local package_dir = get_prop("pushblind.package_file."..name)
+    local package_dir = get_prop("pushblind.package_dir."..name)
     if not package_dir then
         return "not_exist"
     end
