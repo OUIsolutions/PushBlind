@@ -20,9 +20,13 @@ function PushBlind.add_package(props)
     end
     dtw.remove_any(packages_dir)
     os.execute("mkdir -p "..packages_dir)
-
-    os.execute("cd "..packages_dir.." && git clone https://github.com/"..props.package_name..".git")
-    
+    local git_mode = get_prop("pushblind.git_mode")
+    if git_mode == "https" then  
+        os.execute("cd "..packages_dir.." && git clone https://github.com/"..props.package_name..".git")
+    end 
+    if git_mode == "ssh" then  
+        os.execute("cd "..packages_dir.." && git clone git@github.com:"..props.package_name..".git")
+    end
     local package_git = dtw.list_dirs(packages_dir,true)[1]
     if not package_git then
         return "not_exist"
