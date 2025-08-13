@@ -22,6 +22,7 @@ function Add_package()
     dtw.remove_any(packages_dir)
     os.execute("mkdir -p "..packages_dir)
     os.execute("cd "..packages_dir.." && git clone https://github.com/"..package_name..".git")
+    local packages_dir = dtw.list_dirs(packages_dir,true)[1]
     set_prop("pushblind.package_dir."..name,packages_dir)
     set_prop("pushblind.package_file."..name,filename)
 end

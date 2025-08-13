@@ -9,5 +9,5 @@ function  Install_package()
     local filename = get_prop("pushblind.package_file."..name)
     local full_file_path = package_dir.."/"..filename
     print(full_file_path)
-    
+
 end
