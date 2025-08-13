@@ -4,10 +4,11 @@ function PushBlind.add_package(props)
     local home = os.getenv("HOME")
     local formated_package_name = props.package_name:gsub("/", "_")
     local packages_dir = home.."/.pushblind/packages/"..formated_package_name
-    local possible_package_dir = dtw.list_dirs(packages_dir,true)[1]
+    local possible_git_dir = dtw.list_dirs(packages_dir,true)[1]
 
-    if possible_package_dir then
-        set_prop("pushblind.package_dir."..props.name,possible_package_dir)
+    if possible_git_dir then
+        set_prop("pushblind.package_dir."..props.name,packages_dir)
+        set_prop("pushblind.git_dir."..props.name,possible_git_dir)
         set_prop("pushblind.package_file."..props.name,props.filename)
         if not props.force then
             return "already_exists"
@@ -22,14 +23,14 @@ function PushBlind.add_package(props)
         return "not_exist"
     end
 
-    set_prop("pushblind.package_dir."..props.name,packages_dir)
+    set_prop("pushblind.git_dir."..props.name,packages_dir)
     set_prop("pushblind.package_file."..props.name,props.filename)
     return "cloned"
 end
 
 function PushBlind.install_package(name)
     
-    PushBlind.running_dir = get_prop("pushblind.package_dir."..name)
+    PushBlind.running_dir = get_prop("pushblind.git_dir."..name)
     local filename  = get_prop("pushblind.package_file."..name)
     PushBlind.running_file = PushBlind.running_dir..filename
     dofile(PushBlind.running_file)
