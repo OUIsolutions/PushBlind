@@ -17,10 +17,14 @@ pushblind add user/package_name filename
 
 ### Install 
 ```bash
-pushblind install repo_name
+pushblind install name
 ```
 
 ### Update 
 ```bash
-pushblind update repo_name
+pushblind update name
+```
+### Remove Package
+```bash
+pushblind remove name
 ```

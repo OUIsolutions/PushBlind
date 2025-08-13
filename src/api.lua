@@ -33,8 +33,11 @@ function PushBlind.install_package(name)
     PushBlind.running_dir = get_prop("pushblind.git_dir."..name)
     local filename  = get_prop("pushblind.package_file."..name)
     PushBlind.running_file = PushBlind.running_dir..filename
+    if not dtw.is_file(PushBlind.running_file) then
+        print(private_vibescript.RED.."Package "..name.." does not have a valid file: "..filename..private_vibescript.RESET)
+        return false
+    end
     dofile(PushBlind.running_file)
-    local current_file = dtw.get_absolute_path(".")
     os.execute("cd "..PushBlind.running_dir.." && git pull")
     local result = install(PushBlind.running_file)    
     os.execute("cd "..PushBlind.running_dir.." && git reset --hard HEAD")
