@@ -30,17 +30,19 @@ end
 
 function PushBlind.install_package(name)
     PushBlind.running_dir = get_prop("pushblind.git_dir."..name)
-    if not PushBlind.running_dir then
-        print(private_vibescript.RED.."Package "..name.." does not exist."..private_vibescript.RESET)
+    if not PushBlind.running_dir then        
         return false
     end
-    if not dtw.is_file(PushBlind.running_file) then
-        print(private_vibescript.RED.."Package "..name.." does not have a valid file: "..filename..private_vibescript.RESET)
-        return false
-    end
-
+   
     local filename  = get_prop("pushblind.package_file."..name)
+    if not filename then 
+        return false 
+    end 
     PushBlind.running_file = PushBlind.running_dir..filename
+
+     if not dtw.isfile(PushBlind.running_file) then
+        return false
+    end
 
     dofile(PushBlind.running_file)
     os.execute("cd "..PushBlind.running_dir.." && git pull")
@@ -50,8 +52,11 @@ function PushBlind.install_package(name)
 end
 function  PushBlind.remove_package(name)
 
-    local git_dir = get_prop("pushblind.git_dir."..name)
+    local git_dir = get_prop("pushblind.package_file."..name)
     if not git_dir then
+        return "not_exist"
+    end
+    if not dtw.isdir(git_dir) then
         return "not_exist"
     end
     dtw.remove_any(git_dir)
