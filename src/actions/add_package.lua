@@ -1,5 +1,5 @@
 
-function Add_package()
+function Add_package_action()
     local package_name = argv.get_next_unused()
     if not package_name then
         print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
@@ -15,14 +15,12 @@ function Add_package()
         print(private_vibescript.RED.."No name provided for the package"..private_vibescript.RESET)
         return 1
     end
-    local home = os.getenv("HOME")
-    local formated_package_name = package_name:gsub("/", "_")
-    print("formated_package_name: "..formated_package_name)
-    local packages_dir = home.."/.pushblind/packages/"..formated_package_name
-    dtw.remove_any(packages_dir)
-    os.execute("mkdir -p "..packages_dir)
-    os.execute("cd "..packages_dir.." && git clone https://github.com/"..package_name..".git")
-    local packages_dir = dtw.list_dirs(packages_dir,true)[1]
-    set_prop("pushblind.package_dir."..name,packages_dir)
-    set_prop("pushblind.package_file."..name,filename)
+    local force = 
+    PushBlind.add_package({
+        package_name = package_name,
+        filename = filename,
+        name = name,
+        force=false
+    })
+
 end
