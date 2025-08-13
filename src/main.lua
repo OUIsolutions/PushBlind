@@ -13,10 +13,15 @@ function vibescript_extension_internal_main()
          return 1
      end
      if action == "add_package" then
-         return Add_package_action()
+         return Push_blind_add_package_action()
      end
+
      if action == "install" then
-         return Install_package()
+         return Push_blind_install_package()
+     end
+     
+     if action == "update" then
+         return Push_blind_upldate_package()
      end
 
      print("running action "..action)

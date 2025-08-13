@@ -1,5 +1,5 @@
 
-function Add_package_action()
+function Push_blind_add_package_action()
     local package_name = argv.get_next_unused()
     if not package_name then
         print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
@@ -26,7 +26,7 @@ function Add_package_action()
 end
 
 
-function  Install_package()
+function  Push_blind_install_package()
     local name = argv.get_next_unused()
     if not name then
         print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
@@ -44,7 +44,7 @@ function  Install_package()
 end
 
 
-function  Update_package()
+function  Push_blind_upldate_package()
     local name = argv.get_next_unused()
     if not name then
         print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
