@@ -14,3 +14,13 @@ darwin run_blueprint build/ --mode folder local_linux_build
 ```bash
 pushblind add_package user/package_name filename
 ```
+
+### Install 
+```bash
+pushblind install repo_name
+```
+
+### Update 
+```bash
+pushblind update repo_name
+```
