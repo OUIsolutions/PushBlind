@@ -34,10 +34,8 @@ function PushBlind.install_package(name)
     PushBlind.running_file = PushBlind.running_dir..filename
     dofile(PushBlind.running_file)
     local current_file = dtw.get_absolute_path(".")
-    os.execute("cd "..PushBlind.running_dir)
-
-    local result = install(PushBlind.running_file, current_file)
-    --remove any dir changes 
-    os.execute("git reset --hard")    
-    return result
+    os.execute("cd "..PushBlind.running_dir.." && git pull")
+    local result = install(PushBlind.running_file, current_file)    
+    os.execute("git reset --hard HEAD")
+    return result   
 end
