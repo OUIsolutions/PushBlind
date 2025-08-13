@@ -29,14 +29,19 @@ function PushBlind.add_package(props)
 end
 
 function PushBlind.install_package(name)
-    
     PushBlind.running_dir = get_prop("pushblind.git_dir."..name)
-    local filename  = get_prop("pushblind.package_file."..name)
-    PushBlind.running_file = PushBlind.running_dir..filename
+    if not PushBlind.running_dir then
+        print(private_vibescript.RED.."Package "..name.." does not exist."..private_vibescript.RESET)
+        return false
+    end
     if not dtw.is_file(PushBlind.running_file) then
         print(private_vibescript.RED.."Package "..name.." does not have a valid file: "..filename..private_vibescript.RESET)
         return false
     end
+
+    local filename  = get_prop("pushblind.package_file."..name)
+    PushBlind.running_file = PushBlind.running_dir..filename
+
     dofile(PushBlind.running_file)
     os.execute("cd "..PushBlind.running_dir.." && git pull")
     local result = install(PushBlind.running_file)    
