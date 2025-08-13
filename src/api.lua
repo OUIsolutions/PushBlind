@@ -35,15 +35,10 @@ function PushBlind.list_packages()
     local packages_dirs = dtw.list_dirs(packages_dir,true)
     local all = {}
     for i =1,#packages_dirs do
-        local current = packages_dirs[i]        
-        local names_dir = current.."/names/"
-        local name_files = dtw.list_files(names_dir,true)
-        for j = 1, #name_files do
-            local name_file = name_files[j]
-            if dtw.isfile(name_file) then
-                local name = dtw.load_file(name_file)
-                all[#all+1] =name
-            end
+        local current_file = packages_dirs[i]        
+        local content = dtw.load_file(current_file)
+        if content then
+            all[#all+1] = content
         end
     end
     return all    
@@ -95,7 +90,11 @@ function PushBlind.update_package(name)
 end
 
 function  PushBlind.remove_package(name)
-
+    local home = os.getenv("HOME")
+    local name_path = home.."/.pushblind/names/"
+    local name_sha = dtw.generate_sha(name)
+    local name_file = name_path..name_sha..".txt"
+    print("Removing name file: ",name_file)
     local package_dir = get_prop("pushblind.package_dir."..name)
     if not package_dir then
         return "not_exist"
