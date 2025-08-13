@@ -52,13 +52,13 @@ function PushBlind.install_package(name)
 end
 function  PushBlind.remove_package(name)
 
-    local git_dir = get_prop("pushblind.package_file."..name)
-    if not git_dir then
+    local package_dir = get_prop("pushblind.package_file."..name)
+    if not package_dir then
         return "not_exist"
     end
-    if not dtw.isdir(git_dir) then
+    if not dtw.isdir(package_dir) then
         return "not_exist"
     end
-    dtw.remove_any(git_dir)
+    dtw.remove_any(package_dir)
     return "removed"
 end
