@@ -35,7 +35,7 @@ function PushBlind.install_package(name)
     dofile(PushBlind.running_file)
     local current_file = dtw.get_absolute_path(".")
     os.execute("cd "..PushBlind.running_dir.." && git pull")
-    local result = install(PushBlind.running_file, current_file)    
+    local result = install(PushBlind.running_file)    
 
     return result   
 end
