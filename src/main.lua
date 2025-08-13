@@ -31,7 +31,8 @@ function vibescript_extension_internal_main()
     if action == "set_git_mode" then
         return PushBlind_set_git_mode()
     end
-     print("running action "..action)
+    print(private_vibescript.RED.."Unknown action: "..action..private_vibescript.RESET)
+    return 1
 end 
 
 function vibescript_extension_main()
