@@ -40,3 +40,12 @@ function PushBlind.install_package(name)
     os.execute("cd "..PushBlind.running_dir.." && git reset --hard HEAD")
     return result   
 end
+function  PushBlind.remove_package(name)
+
+    local git_dir = get_prop("pushblind.git_dir."..name)
+    if not git_dir then
+        return "not_exist"
+    end
+    dtw.remove_any(git_dir)
+    return "removed"
+end
