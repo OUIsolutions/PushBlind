@@ -7,6 +7,13 @@ function PushBlind.add_package(props)
     local possible_git_dir = dtw.list_dirs(packages_dir,true)[1]
 
     if possible_git_dir then
+
+        local names_dir = home.."/.pushblind/names/"
+        local name_sha = dtw.generate_sha(props.name)
+        dtw.write_file(names_dir..name_sha..".txt",props.name)
+        set_prop("pushblind.package_dir."..props.name,packages_dir)
+        set_prop("pushblind.git_dir."..props.name,possible_git_dir)
+        set_prop("pushblind.package_file."..props.name,props.filename)
         if not props.force then
             return "already_exists"
         end
@@ -31,11 +38,11 @@ end
 function PushBlind.list_packages()
     
     local home = os.getenv("HOME")
-    local packages_dir = home.."/.pushblind/packages/"
-    local packages_dirs = dtw.list_dirs(packages_dir,true)
+    local names_dir = home.."/.pushblind/names/"
+    local names_files = dtw.list_files(names_dir,true)
     local all = {}
-    for i =1,#packages_dirs do
-        local current_file = packages_dirs[i]        
+    for i =1,#names_files do
+        local current_file = names_files[i]      
         local content = dtw.load_file(current_file)
         if content then
             all[#all+1] = content
@@ -45,7 +52,6 @@ function PushBlind.list_packages()
 end
 function PushBlind.install_package(name)
     PushBlind.running_dir = get_prop("pushblind.git_dir."..name)
-    print("running_dir ",PushBlind.running_dir)
     if not PushBlind.running_dir then        
         return false
     end
@@ -94,7 +100,6 @@ function  PushBlind.remove_package(name)
     local name_path = home.."/.pushblind/names/"
     local name_sha = dtw.generate_sha(name)
     local name_file = name_path..name_sha..".txt"
-    print("Removing name file: ",name_file)
     local package_dir = get_prop("pushblind.package_dir."..name)
     if not package_dir then
         return "not_exist"
