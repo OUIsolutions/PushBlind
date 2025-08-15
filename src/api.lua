@@ -16,7 +16,8 @@ function PushBlind.add_package(props)
         set_prop("pushblind.git_dir."..props.name,possible_git_dir)
         set_prop("pushblind.package_file."..props.name,props.filename)
         if not props.force then
-            return "already_exists"
+            print(private_vibescript.YELLOW.."Package already exists: "..props.name..private_vibescript.RESET)
+            return
         end
     end
     dtw.remove_any(packages_dir)
