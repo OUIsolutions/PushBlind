@@ -99,18 +99,45 @@ function PushBlind.update_package(name)
     return result   
 end
 
-function  PushBlind.remove_package(name)
+function PushBlind.remove_package(name)
     local home = os.getenv("HOME")
-    local name_path = home.."/.pushblind/names/"
+    local name_path = home .. "/.pushblind/names/"
     local name_sha = dtw.generate_sha(name)
-    local name_file = name_path..name_sha..".txt"
-    local package_dir = get_prop("pushblind.package_dir."..name)
+    local name_file = name_path .. name_sha .. ".txt"
+    local package_dir = get_prop("pushblind.package_dir." .. name)
+
     if not package_dir then
         return "not_exist"
     end
     if not dtw.isdir(package_dir) then
         return "not_exist"
     end
-    dtw.remove_any(package_dir)
+
+    -- Verificar se outros pacotes usam o mesmo package_dir
+    local names_files = dtw.list_files(name_path, true)
+    local other_packages_using_dir = false
+    for i = 1, #names_files do
+        local current_file = names_files[i]
+        local current_name = dtw.load_file(current_file)
+        if current_name and current_name ~= name then
+            local other_package_dir = get_prop("pushblind.package_dir." .. current_name)
+            if other_package_dir == package_dir then
+                other_packages_using_dir = true
+                break
+            end
+        end
+    end
+
+    -- Remover o arquivo de nome e as propriedades do pacote
+    dtw.remove_any(name_file)
+    set_prop("pushblind.package_dir." .. name, nil)
+    set_prop("pushblind.git_dir." .. name, nil)
+    set_prop("pushblind.package_file." .. name, nil)
+
+    -- Remover o package_dir apenas se nenhum outro pacote o utiliza
+    if not other_packages_using_dir then
+        dtw.remove_any(package_dir)
+    end
+
     return "removed"
 end
