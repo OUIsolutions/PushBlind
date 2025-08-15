@@ -59,17 +59,17 @@ end
 function PushBlind.run_action(package_name, action_name)
     PushBlind.running_dir = get_prop("pushblind.git_dir." .. package_name)
     if not PushBlind.running_dir then        
-        error("Package " .. package_name .. " not found.")
+        error("Package " .. package_name .. " not found.",0)
     end
 
     local filename = get_prop("pushblind.package_file." .. package_name)
     if not filename then 
-        error("Package " .. package_name .. " does not have a valid filename.") 
+        error("Package " .. package_name .. " does not have a valid filename.",0) 
     end 
     PushBlind.running_file = PushBlind.running_dir .. filename
 
     if not dtw.isfile(PushBlind.running_file) then
-        error("Package " .. package_name .. " does not have a valid file.")
+        error("Package " .. package_name .. " does not have a valid file.",0)
     end
     os.execute("cd " .. PushBlind.running_dir .. " && git pull")
     local ok, err = pcall(dofile, PushBlind.running_file)
@@ -95,7 +95,7 @@ function PushBlind.run_action(package_name, action_name)
 
     os.execute("cd " .. PushBlind.running_dir .. " && git reset --hard HEAD")
     if not action_provided then
-        error("Action " .. action_name .. " not found for package " .. package_name)
+        error("Action " .. action_name .. " not found for package " .. package_name,0)
     end
 end
 
