@@ -71,13 +71,34 @@ function PushBlind.run_action(name,action_name)
      if not dtw.isfile(PushBlind.running_file) then
         error("Package "..name.." does not have a valid file.")
     end
-
-    dofile(PushBlind.running_file)
     os.execute("cd "..PushBlind.running_dir.." && git pull")
-    PushBlind.actions[action_name](PushBlind.running_file)    
+    local ok, error = pcall (dofile,PushBlind.running_file)
+    if not ok then
+        os.execute("cd "..PushBlind.running_dir.." && git reset --hard HEAD")
+        error("Error running package "..name..": "..error)
+    end
+
+    local action_provided = false
+    for action, func in pairs(PushBlind.actions) do
+        if action == action_name then
+            action_provided = true
+            break
+        end
+    end
+    if action_provided then
+        local ok, error = pcall(PushBlind.actions[action_name],PushBlind.running_file)
+        if not ok then
+            os.execute("cd "..PushBlind.running_dir.." && git reset --hard HEAD")
+            error("Error running action "..action_name.." for package "..name..": "..error)
+        end
+    end
+
     os.execute("cd "..PushBlind.running_dir.." && git reset --hard HEAD")
-    
-end 
+    if not action_provided then
+        error("Action "..action_name.." not found for package "..name)
+    end
+end
+
 
 function PushBlind.install_package(name)
    PushBlind.run_action(name,"install")
@@ -88,21 +109,22 @@ function PushBlind.update_package(name)
 end
 
 function PushBlind.remove_package(name)
-    PushBlind.run_action(name,"remove")
+
+    local ok,error = pcall(PushBlind.run_action,name,"remove")
+    if not  ok then
+        print(private_vibescript.RED.."Error on remove "..name..": "..error..private_vibescript.RESET)
+    end
+
     local home = os.getenv("HOME")
     local name_path = home .. "/.pushblind/names/"
     local name_sha = dtw.generate_sha(name)
     local name_file = name_path .. name_sha .. ".txt"
     local package_dir = get_prop("pushblind.package_dir." .. name)
-
-    if not package_dir then
-        return "not_exist"
-    end
-    if not dtw.isdir(package_dir) then
-        return "not_exist"
-    end
-
-    -- Verificar se outros pacotes usam o mesmo package_dir
+    set_prop("pushblind.package_dir." .. name, nil)
+    set_prop("pushblind.git_dir." .. name, nil)
+    set_prop("pushblind.package_file." .. name, nil)
+    dtw.remove_any(name_file)
+ 
     local names_files = dtw.list_files(name_path, true)
     local other_packages_using_dir = false
     for i = 1, #names_files do
@@ -116,17 +138,17 @@ function PushBlind.remove_package(name)
             end
         end
     end
-
-    -- Remover o arquivo de nome e as propriedades do pacote
-    dtw.remove_any(name_file)
-    set_prop("pushblind.package_dir." .. name, nil)
-    set_prop("pushblind.git_dir." .. name, nil)
-    set_prop("pushblind.package_file." .. name, nil)
+    if not package_dir then
+        error("Package "..name.." not found.")
+    end  
+    if not dtw.isdir(package_dir) then
+        error("Package directory "..package_dir.." does not exist.")
+    end
 
     -- Remover o package_dir apenas se nenhum outro pacote o utiliza
     if not other_packages_using_dir then
         dtw.remove_any(package_dir)
     end
 
-    return "removed"
+
 end
