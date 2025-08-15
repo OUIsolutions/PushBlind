@@ -50,47 +50,14 @@ function PushBlind_list_packages()
     return 0
 end
 
-function  Push_blind_install_package()
-    local name = argv.get_next_unused()
-    if not name then
-        print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
-        return 1
-    end
-    local installed = PushBlind.install_package(name)
-    if not installed then
-        print(private_vibescript.RED.."Failed to install package "..name..". It may not exist or be improperly formatted."..private_vibescript.RESET)
-        return 1   
-    end 
 
-end
-
-
-function  Push_blind_upldate_package()
-    local name = argv.get_next_unused()
-    if not name then
-        print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
-        return 1
-    end
-    local updated = PushBlind.update_package(name)
-    if not updated then
-        print(private_vibescript.RED.."Failed to update package "..name..". It may not exist or be improperly formatted."..private_vibescript.RESET)
-        return 1
-    end 
-end
 function Push_blind_remove_package()
     local name = argv.get_next_unused()
     if not name then
         print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
         return 1
     end
-    local removed = PushBlind.remove_package(name)
-    if removed == "not_exist" then
-        print(private_vibescript.RED.."Package "..name.." does not exist."..private_vibescript.RESET)
-        return 1
-    elseif removed == "removed" then
-        print(private_vibescript.GREEN.."Package "..name.." successfully removed."..private_vibescript.RESET)
-        return 0
-    end 
+    PushBlind.remove_package(name)
 end
 
 function PushBlind_set_git_mode()

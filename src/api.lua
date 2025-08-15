@@ -56,26 +56,26 @@ function PushBlind.list_packages()
     return all    
 end
 
-function PushBlind.run_action(name,action_name)
-    PushBlind.running_dir = get_prop("pushblind.git_dir."..name)
+function PushBlind.run_action(package_name, action_name)
+    PushBlind.running_dir = get_prop("pushblind.git_dir." .. package_name)
     if not PushBlind.running_dir then        
-        error("Package "..name.." not found.")
+        error("Package " .. package_name .. " not found.")
     end
-   
-    local filename  = get_prop("pushblind.package_file."..name)
-    if not filename then 
-        error("Package "..name.." does not have a valid filename.") 
-    end 
-    PushBlind.running_file = PushBlind.running_dir..filename
 
-     if not dtw.isfile(PushBlind.running_file) then
-        error("Package "..name.." does not have a valid file.")
+    local filename = get_prop("pushblind.package_file." .. package_name)
+    if not filename then 
+        error("Package " .. package_name .. " does not have a valid filename.") 
+    end 
+    PushBlind.running_file = PushBlind.running_dir .. filename
+
+    if not dtw.isfile(PushBlind.running_file) then
+        error("Package " .. package_name .. " does not have a valid file.")
     end
-    os.execute("cd "..PushBlind.running_dir.." && git pull")
-    local ok, error = pcall (dofile,PushBlind.running_file)
+    os.execute("cd " .. PushBlind.running_dir .. " && git pull")
+    local ok, err = pcall(dofile, PushBlind.running_file)
     if not ok then
-        os.execute("cd "..PushBlind.running_dir.." && git reset --hard HEAD")
-        error("Error running package "..name..": "..error)
+        os.execute("cd " .. PushBlind.running_dir .. " && git reset --hard HEAD")
+        error("Error running package " .. package_name .. ": " .. err)
     end
 
     local action_provided = false
@@ -86,43 +86,43 @@ function PushBlind.run_action(name,action_name)
         end
     end
     if action_provided then
-        local ok, error = pcall(PushBlind.actions[action_name],PushBlind.running_file)
+        local ok, err = pcall(PushBlind.actions[action_name], PushBlind.running_file)
         if not ok then
-            os.execute("cd "..PushBlind.running_dir.." && git reset --hard HEAD")
-            error("Error running action "..action_name.." for package "..name..": "..error)
+            os.execute("cd " .. PushBlind.running_dir .. " && git reset --hard HEAD")
+            error("Error running action " .. action_name .. " for package " .. package_name .. ": " .. err)
         end
     end
 
-    os.execute("cd "..PushBlind.running_dir.." && git reset --hard HEAD")
+    os.execute("cd " .. PushBlind.running_dir .. " && git reset --hard HEAD")
     if not action_provided then
-        error("Action "..action_name.." not found for package "..name)
+        error("Action " .. action_name .. " not found for package " .. package_name)
     end
 end
 
 
-function PushBlind.install_package(name)
-   PushBlind.run_action(name,"install")
+function PushBlind.install_package(package_name)
+   PushBlind.run_action(package_name,"install")
 end
 
-function PushBlind.update_package(name)
-    PushBlind.run_action(name,"update")    
+function PushBlind.update_package(package_name)
+    PushBlind.run_action(package_name,"update")    
 end
 
-function PushBlind.remove_package(name)
+function PushBlind.remove_package(package_name)
 
-    local ok,error = pcall(PushBlind.run_action,name,"remove")
+    local ok,error = pcall(PushBlind.run_action,package_name,"remove")
     if not  ok then
-        print(private_vibescript.RED.."Error on remove "..name..": "..error..private_vibescript.RESET)
+        print(private_vibescript.RED.."Error on remove "..package_name..": "..error..private_vibescript.RESET)
     end
 
     local home = os.getenv("HOME")
     local name_path = home .. "/.pushblind/names/"
-    local name_sha = dtw.generate_sha(name)
+    local name_sha = dtw.generate_sha(package_name)
     local name_file = name_path .. name_sha .. ".txt"
-    local package_dir = get_prop("pushblind.package_dir." .. name)
-    set_prop("pushblind.package_dir." .. name, nil)
-    set_prop("pushblind.git_dir." .. name, nil)
-    set_prop("pushblind.package_file." .. name, nil)
+    local package_dir = get_prop("pushblind.package_dir." .. package_name)
+    set_prop("pushblind.package_dir." .. package_name, nil)
+    set_prop("pushblind.git_dir." .. package_name, nil)
+    set_prop("pushblind.package_file." .. package_name, nil)
     dtw.remove_any(name_file)
  
     local names_files = dtw.list_files(name_path, true)
@@ -139,8 +139,8 @@ function PushBlind.remove_package(name)
         end
     end
     if not package_dir then
-        error("Package "..name.." not found.")
-    end  
+        error("Package "..package_name.." not found.")
+    end
     if not dtw.isdir(package_dir) then
         error("Package directory "..package_dir.." does not exist.")
     end

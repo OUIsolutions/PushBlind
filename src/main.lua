@@ -18,21 +18,19 @@ function vibescript_extension_internal_main()
     if action == "list" then
         return PushBlind_list_packages()
     end
-     if action == "install" then
-         return Push_blind_install_package()
-     end
-     
-     if action == "update" then
-         return Push_blind_upldate_package()
-     end
     if action == "remove" then
         return Push_blind_remove_package()
     end
     if action == "set_git_mode" then
         return PushBlind_set_git_mode()
     end
-    print(private_vibescript.RED.."Unknown action: "..action..private_vibescript.RESET)
-    return 1
+    local package_name = argv.get_next_unused()
+    if not package_name then
+        print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
+        return 1
+    end
+    PushBlind.run_action(package_name, action)
+    return 0
 end 
 
 function vibescript_extension_main()
