@@ -1,4 +1,5 @@
 PushBlind = {}
+PushBlind.actions = {}
 
 function PushBlind.add_package(props)
     local home = os.getenv("HOME")
@@ -54,52 +55,40 @@ function PushBlind.list_packages()
     end
     return all    
 end
+
+function PushBlind.run_action(name,action_name)
+    PushBlind.running_dir = get_prop("pushblind.git_dir."..name)
+    if not PushBlind.running_dir then        
+        error("Package "..name.." not found.")
+    end
+   
+    local filename  = get_prop("pushblind.package_file."..name)
+    if not filename then 
+        error("Package "..name.." does not have a valid filename.") 
+    end 
+    PushBlind.running_file = PushBlind.running_dir..filename
+
+     if not dtw.isfile(PushBlind.running_file) then
+        error("Package "..name.." does not have a valid file.")
+    end
+
+    dofile(PushBlind.running_file)
+    os.execute("cd "..PushBlind.running_dir.." && git pull")
+    PushBlind.actions[action_name](PushBlind.running_file)    
+    os.execute("cd "..PushBlind.running_dir.." && git reset --hard HEAD")
+    
+end 
+
 function PushBlind.install_package(name)
-    PushBlind.running_dir = get_prop("pushblind.git_dir."..name)
-    if not PushBlind.running_dir then        
-        return false
-    end
-   
-    local filename  = get_prop("pushblind.package_file."..name)
-    if not filename then 
-        return false 
-    end 
-    PushBlind.running_file = PushBlind.running_dir..filename
-
-     if not dtw.isfile(PushBlind.running_file) then
-        return false
-    end
-
-    dofile(PushBlind.running_file)
-    os.execute("cd "..PushBlind.running_dir.." && git pull")
-    local result = install(PushBlind.running_file)    
-    os.execute("cd "..PushBlind.running_dir.." && git reset --hard HEAD")
-    return result   
+   PushBlind.run_action(name,"install")
 end
+
 function PushBlind.update_package(name)
-    PushBlind.running_dir = get_prop("pushblind.git_dir."..name)
-    if not PushBlind.running_dir then        
-        return false
-    end
-   
-    local filename  = get_prop("pushblind.package_file."..name)
-    if not filename then 
-        return false 
-    end 
-    PushBlind.running_file = PushBlind.running_dir..filename
-
-     if not dtw.isfile(PushBlind.running_file) then
-        return false
-    end
-
-    dofile(PushBlind.running_file)
-    os.execute("cd "..PushBlind.running_dir.." && git pull")
-    local result = update(PushBlind.running_file)    
-    os.execute("cd "..PushBlind.running_dir.." && git reset --hard HEAD")
-    return result   
+    PushBlind.run_action(name,"update")    
 end
 
 function PushBlind.remove_package(name)
+    PushBlind.run_action(name,"remove")
     local home = os.getenv("HOME")
     local name_path = home .. "/.pushblind/names/"
     local name_sha = dtw.generate_sha(name)
