@@ -87,7 +87,7 @@ function PushBlind.run_action(package_name, action_name)
         end
     end
     if action_provided then
-        local ok, err = pcall(PushBlind.actions[action_name], PushBlind.running_file)
+        local ok, err = pcall(PushBlind.actions[action_name],PushBlind.running_dir, PushBlind.running_file)
         if not ok then
             os.execute("cd " .. PushBlind.running_dir .. " && git reset --hard HEAD")
             error("Error running action " .. action_name .. " for package " .. package_name .. ": " .. err)
