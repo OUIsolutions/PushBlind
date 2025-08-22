@@ -8,16 +8,7 @@ function PushBlind.add_package(props)
 
     if dtw.isdir(package_dir) then
 
-        local names_dir = home.."/.pushblind/names/"
-        local name_sha = dtw.generate_sha(props.name)
-        dtw.write_file(names_dir..name_sha..".txt",props.name)
-        set_prop("pushblind.package_dir."..props.name,packages_dir)
-        set_prop("pushblind.git_dir."..props.name,possible_git_dir)
-        set_prop("pushblind.package_file."..props.name,props.filename)
-        if not props.force then
-            print(private_vibescript.YELLOW.."Package already exists: "..props.name..private_vibescript.RESET)
-            return
-        end
+          print(private_vibescript.YELLOW.."Package already exists: "..props.name..private_vibescript.RESET)
     end
     dtw.remove_any(packages_dir)
     os.execute("mkdir -p "..packages_dir)
