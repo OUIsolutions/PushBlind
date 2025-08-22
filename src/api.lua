@@ -11,6 +11,8 @@ function PushBlind.add_package(props)
         return "already_exists"
     end
     dtw.create_dir_recursively(push_blind_packages_dir)
+    local git_mode = get_prop("pushblind.git_mode")
+
     local ok = os.execute("git clone "..props.package_name.." "..package_dir)
     if not ok then
         return "not_exist"
