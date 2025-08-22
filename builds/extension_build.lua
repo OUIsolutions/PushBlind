@@ -3,9 +3,6 @@ function extension_build()
     local project = darwin.create_project(PROJECT_NAME)
     project.add_lua_code('pushblind = {}')
 
-
-
-
     local files = darwin.dtw.list_files_recursively("src",true)
     for i=1,#files do
         local file = files[i]

@@ -1,10 +1,4 @@
-local debian_static_build_done = false
 function debian_static_build()
-    if debian_static_build_done then
-        return
-    end
-    debian_static_build_done = true
-    alpine_static_build()
 
 
     local control = [[
@@ -56,3 +50,10 @@ Description: SUMARY
         command = "chmod 755 /project/DEBIAN/postinst &&  dpkg-deb --build /project /release/debian_static.deb"
     })
 end
+darwin.add_recipe({
+    name=".deb",
+    requires={"linux_bin"},
+    description="make a .deb of the project",
+    outs={"release/debian_static.deb"},
+    callback=debian_static_build
+})
