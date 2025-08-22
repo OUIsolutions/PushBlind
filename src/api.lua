@@ -3,11 +3,10 @@ PushBlind.actions = {}
 
 function PushBlind.add_package(props)
     local home = os.getenv("HOME")
-    local formated_package_name = props.package_name:gsub("/", "_")
-    local packages_dir = home.."/.pushblind/packages/"..formated_package_name
-    local possible_git_dir = dtw.list_dirs(packages_dir,true)[1]
+    local formated_package_name = dtw.generate_sha(props.package_name)
+    local package_dir = home.."/.pushblind/packages/"..formated_package_name
 
-    if possible_git_dir then
+    if dtw.isdir(package_dir) then
 
         local names_dir = home.."/.pushblind/names/"
         local name_sha = dtw.generate_sha(props.name)
