@@ -10,7 +10,7 @@ function extension_build()
     end
     project.generate_c_lib_file({
         output= "release/extension.c",
-        include_lua_embedded = false,
+        include_lua_cembed = false,
         lib_name='pushblind',
         object_export='pushblind'
     })

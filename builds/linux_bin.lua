@@ -22,7 +22,7 @@ function linux_bin()
         volumes = {
             { "./", "/app" },
         },
-        command ={ compiler..[[ dependencies/vibescript.c -static -DCONTENT_ENCRYPT_KEY=\\"../keys/content.h\\" -DLLM_ENCRYPT_KEY=\\"../keys/llm.h\\" -DNAME_ENCRYPT_KEY=\\"../keys/name.h\\"  -DVIBE_EXTENSION_MODULE=\\"../release/extension.c\\" -DVIBE_EXTENSION_FUNC=pusblind  -DVIBE_EXTENSION_LIB_NAME=\\"pusblind\\"   -o  release/linux_bin.out]]}
+        command ={ compiler..[[ dependencies/vibescript.c -static -DCONTENT_ENCRYPT_KEY=\\"../keys/content.h\\" -DLLM_ENCRYPT_KEY=\\"../keys/llm.h\\" -DNAME_ENCRYPT_KEY=\\"../keys/name.h\\"  -DVIBE_EXTENSION_MODULE=\\"../release/extension.c\\" -DVIBE_EXTENSION_FUNC=pushblind  -DVIBE_EXTENSION_LIB_NAME=\\"pushblind\\"   -o  release/linux_bin.out]]}
         --command ="sh"
     })
 end
