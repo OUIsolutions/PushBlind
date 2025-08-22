@@ -1,0 +1,9 @@
+[
+    {
+        "type": "gitrelease",
+        "cli":"curl",
+        "repo": "OUIsolutions/VibeScript",
+        "file": "amalgamation.c",
+        "dest": "dependencies/extension.c"
+    }
+]
