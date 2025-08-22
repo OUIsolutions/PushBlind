@@ -1,1 +1,1 @@
-PUSH_BLIND_LOCATION = "./pushblind"
+PUSH_BLIND_LOCATION = "./teste_pushblind"
