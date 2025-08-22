@@ -1,9 +1,4 @@
-local alreay_did_the_extension = false
 function extension_build()
-    if alreay_did_the_extension then
-        return
-    end
-    alreay_did_the_extension = true
 
     local project = darwin.create_project(PROJECT_NAME)
     project.add_lua_code('ouivibe = {}')
@@ -28,3 +23,9 @@ function extension_build()
     })
 
 end
+darwin.add_recipe({
+    name="extension",
+    description="make the C extension",
+    outs={"release/extension.c"},
+    callback=extension_build
+})

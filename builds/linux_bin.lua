@@ -26,3 +26,10 @@ function linux_bin()
         --command ="sh"
     })
 end
+darwin.add_recipe({
+    name="linux_bin",
+    requires={"extension"},
+    description="make a static compiled linux binary of the project",
+    outs={"release/linux_bin.out"},
+    callback=linux_bin
+})
