@@ -1,13 +1,9 @@
 function extension_build()
 
     local project = darwin.create_project(PROJECT_NAME)
-    project.add_lua_code('ouivibe = {}')
+    project.add_lua_code('pushblind = {}')
 
 
-    project.add_lua_code("plataform_lib = function()\n")
-    project.add_lua_file("dependencies/Plataform.lua")
-    project.add_lua_code("end\n")
-    project.add_lua_code("plataform_lib = plataform_lib()\n")
 
 
     local files = darwin.dtw.list_files_recursively("src",true)
@@ -17,9 +13,9 @@ function extension_build()
     end
     project.generate_c_lib_file({
         output= "release/extension.c",
-        include_lua_cembed = false,
-        lib_name='ouivibe',
-        object_export='ouivibe'
+        include_lua_embedded = false,
+        lib_name='pushblind',
+        object_export='pushblind'
     })
 
 end
