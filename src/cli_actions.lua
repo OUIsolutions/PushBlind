@@ -7,9 +7,9 @@ function Push_blind_add_package_action()
         return 1
     end
 
-    local package_name = argv.get_next_unused()
-    if not package_name then
-        print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
+    local repo = argv.get_next_unused()
+    if not repo then
+        print(private_vibescript.RED.."No repo name provided"..private_vibescript.RESET)
         return 1
     end
     local name = argv.get_flag_arg_by_index({ "name" }, 1)
@@ -17,7 +17,7 @@ function Push_blind_add_package_action()
         print(private_vibescript.RED.."No name provided for the package"..private_vibescript.RESET)
         return 1
     end
-    
+
     local filename = argv.get_next_unused()
     if not filename then
         print(private_vibescript.RED.."No filename provided for the package"..private_vibescript.RESET)
@@ -26,7 +26,7 @@ function Push_blind_add_package_action()
 
     local force = argv.flags_exist({ "force"})
     local result =PushBlind.add_package({
-        package_name = package_name,
+        repo = repo,
         filename = filename,
         name = name,
         force=force
@@ -35,7 +35,7 @@ function Push_blind_add_package_action()
         print(private_vibescript.YELLOW.."Package "..name.." already exists. Use --force to overwrite."..private_vibescript.RESET)
         return 0
     elseif result == "not_exist" then
-        print(private_vibescript.RED.."Package "..package_name.." does not exist on GitHub."..private_vibescript.RESET)
+        print(private_vibescript.RED.."Package "..repo.." does not exist on GitHub."..private_vibescript.RESET)
         return 1
     elseif result == "cloned" then
         print(private_vibescript.GREEN.."Package "..name.." successfully cloned."..private_vibescript.RESET)
@@ -46,8 +46,8 @@ end
 function PushBlind_list_packages()
     local packages = PushBlind.list_packages()
     for i=1,#packages do
-        local package_name = packages[i]
-        print(private_vibescript.GREEN..package_name..private_vibescript.RESET)
+        local repo = packages[i]
+        print(private_vibescript.GREEN..repo..private_vibescript.RESET)
     end
     return 0
 end

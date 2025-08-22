@@ -6,114 +6,62 @@ end
 
 function PushBlind.add_package(props)
     local home = get_home()
-    local formated_package_name = dtw.generate_sha(props.name)
-    local push_blind_packages_dir = home.."/.pushblind/packages/"
-    local package_repo = push_blind_packages_dir..formated_package_name.."/repo"
+    local formated_repo = dtw.generate_sha(props.repo)
+    local pushblind_repos_dir = home.."/.pushblind/repos/"
+    local package_repo = pushblind_repos_dir..formated_repo
 
-    if dtw.isdir(package_repo) then
-        return "already_exists"
+    if not dtw.isdir(package_repo) then
+        dtw.create_dir_recursively(pushblind_repos_dir)
+        local git_mode = get_prop("pushblind.git_mode")
+        local ok = false
+        if git_mode == "https" then
+                ok = os.execute("git clone  https://github.com/"..props.repo.." "..package_repo)
+        end
+        if git_mode == "ssh" then
+                ok = os.execute("git clone git@github.com:"..props.repo.." "..package_repo)
+        end
+        if not ok then
+            return "not_exist"
+        end
     end
-    dtw.create_dir_recursively(push_blind_packages_dir)
-    local git_mode = get_prop("pushblind.git_mode")
-    local ok = false
-    if git_mode == "https" then
-        ok = os.execute("git clone  https://github.com/"..props.package_name.." "..package_repo)
-    end
-    if git_mode == "ssh" then
-        ok = os.execute("git clone git@github.com:"..props.package_name.." "..package_repo)
-    end
-    local package_name_path = home .. "/.pushblind/packages/"..formated_package_name.."/name"
-    dtw.write_file(package_name_path, props.name)
+    local packages_info_dir  = home.."/.pushblind/packages/"
+    local package_info_dir = packages_info_dir..
 
-    if not ok then
-        return "not_exist"
-    end
     
     return "cloned"
 end
 function PushBlind.list_packages()
-    local home = get_home()
-    local packages_dir = home.."/.pushblind/packages/"
-    local package_dirs = dtw.list_dirs(packages_dir)
-    local all = {}
-    for i = 1, #package_dirs do
-        local current_dir = package_dirs[i]
-        local name_file = current_dir.."/name"
-        local name = dtw.load_file(name_file)
-        if name then
-            all[#all+1] = name
-        end
-    end
-    return all
+  
 end
 
-function PushBlind.run_action(package_name, action_name)
-    PushBlind.running_dir = get_prop("pushblind.git_dir." .. package_name)
-    if not PushBlind.running_dir then        
-        error("Package " .. package_name .. " not found.",0)
-    end
-
-    local filename = get_prop("pushblind.package_file." .. package_name)
-    if not filename then 
-        error("Package " .. package_name .. " does not have a valid filename.",0) 
-    end 
-    PushBlind.running_file = PushBlind.running_dir .. filename
-
-    if not dtw.isfile(PushBlind.running_file) then
-        error("Package " .. package_name .. " does not have a valid file.",0)
-    end
-    os.execute("cd " .. PushBlind.running_dir .. " && git pull")
-    local ok, err = pcall(dofile, PushBlind.running_file)
-    if not ok then
-        os.execute("cd " .. PushBlind.running_dir .. " && git reset --hard HEAD")
-        error("Error running package " .. package_name .. ": " .. err)
-    end
-
-    local action_provided = false
-    for action, func in pairs(PushBlind.actions) do
-        if action == action_name then
-            action_provided = true
-            break
-        end
-    end
-    if action_provided then
-        local ok, err = pcall(PushBlind.actions[action_name],PushBlind.running_dir, PushBlind.running_file)
-        if not ok then
-            os.execute("cd " .. PushBlind.running_dir .. " && git reset --hard HEAD")
-            error("Error running action " .. action_name .. " for package " .. package_name .. ": " .. err)
-        end
-    end
-
-    os.execute("cd " .. PushBlind.running_dir .. " && git reset --hard HEAD")
-    if not action_provided then
-        error("Action " .. action_name .. " not found for package " .. package_name,0)
-    end
+function PushBlind.run_action(repo, action_name)
+   
 end
 
 
-function PushBlind.install_package(package_name)
-   PushBlind.run_action(package_name,"install")
+function PushBlind.install_package(repo)
+   PushBlind.run_action(repo,"install")
 end
 
-function PushBlind.update_package(package_name)
-    PushBlind.run_action(package_name,"update")    
+function PushBlind.update_package(repo)
+    PushBlind.run_action(repo,"update")    
 end
 
-function PushBlind.remove_package(package_name)
+function PushBlind.remove_package(repo)
 
-    local ok,error = pcall(PushBlind.run_action,package_name,"remove")
+    local ok,error = pcall(PushBlind.run_action,repo,"remove")
     if not  ok then
-        print(private_vibescript.RED.."Error on remove "..package_name..": "..error..private_vibescript.RESET)
+        print(private_vibescript.RED.."Error on remove "..repo..": "..error..private_vibescript.RESET)
     end
 
     local home = os.getenv("HOME")
     local name_path = home .. "/.pushblind/names/"
-    local name_sha = dtw.generate_sha(package_name)
+    local name_sha = dtw.generate_sha(repo)
     local name_file = name_path .. name_sha .. ".txt"
-    local package_dir = get_prop("pushblind.package_dir." .. package_name)
-    set_prop("pushblind.package_dir." .. package_name, nil)
-    set_prop("pushblind.git_dir." .. package_name, nil)
-    set_prop("pushblind.package_file." .. package_name, nil)
+    local package_dir = get_prop("pushblind.package_dir." .. repo)
+    set_prop("pushblind.package_dir." .. repo, nil)
+    set_prop("pushblind.git_dir." .. repo, nil)
+    set_prop("pushblind.package_file." .. repo, nil)
     dtw.remove_any(name_file)
  
     local names_files = dtw.list_files(name_path, true)
@@ -130,7 +78,7 @@ function PushBlind.remove_package(package_name)
         end
     end
     if not package_dir then
-        error("Package "..package_name.." not found.")
+        error("Package "..repo.." not found.")
     end
     if not dtw.isdir(package_dir) then
         error("Package directory "..package_dir.." does not exist.")
