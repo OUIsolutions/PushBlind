@@ -7,29 +7,10 @@ function PushBlind.add_package(props)
     local package_dir = home.."/.pushblind/packages/"..formated_package_name
 
     if dtw.isdir(package_dir) then
-
           print(private_vibescript.YELLOW.."Package already exists: "..props.name..private_vibescript.RESET)
     end
-    dtw.remove_any(packages_dir)
-    os.execute("mkdir -p "..packages_dir)
-    local git_mode = get_prop("pushblind.git_mode")
-    if git_mode == "https" then  
-        os.execute("cd "..packages_dir.." && git clone https://github.com/"..props.package_name..".git")
-    end 
-    if git_mode == "ssh" then  
-        os.execute("cd "..packages_dir.." && git clone git@github.com:"..props.package_name..".git")
-    end
-    local package_git = dtw.list_dirs(packages_dir,true)[1]
-    if not package_git then
-        return "not_exist"
-    end
-    local names_dir = home.."/.pushblind/names/"
-    local name_sha = dtw.generate_sha(props.name)
-    dtw.write_file(names_dir..name_sha..".txt",props.name)
-    set_prop("pushblind.package_dir."..props.name,packages_dir)
-    set_prop("pushblind.git_dir."..props.name,package_git)
-    set_prop("pushblind.package_file."..props.name,props.filename)
-    return "cloned"
+
+    
 end
 function PushBlind.list_packages()
     
