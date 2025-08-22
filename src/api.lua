@@ -48,14 +48,15 @@ function PushBlind.list_packages()
 end
 
 
+function PushBlind.run_action(repo, action_name)
+   
+end
+
+
 function PushBlind.remove_package(repo)
 
 end
 
-
-function PushBlind.run_action(repo, action_name)
-   
-end
 
 
 function PushBlind.install_package(repo)
