@@ -25,9 +25,13 @@ function PushBlind.add_package(props)
         end
     end
     local packages_info_dir  = home.."/.pushblind/packages/"
-    local package_info_dir = packages_info_dir..
+    local package_info_dir = packages_info_dir..dtw.generate_sha(props.name)
+    if dtw.isdir(packages_info_dir) then
+        return "already_exists"
+    end
+    dtw.write_file(package_info_dir.."/name.txt", props.name)
+    dtw.write_file(package_info_dir.."/repo.txt",formated_repo)
 
-    
     return "cloned"
 end
 function PushBlind.list_packages()
