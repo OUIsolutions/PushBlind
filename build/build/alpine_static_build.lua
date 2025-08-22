@@ -1,10 +1,6 @@
-local alpine_static_build_done = false
 
-function alpine_static_build()
-    if alpine_static_build_done then
-        return
-    end
-    alpine_static_build_done = true
+function linux_bin()
+
     extension_build()
 
     os.execute("mkdir -p release")
@@ -26,7 +22,7 @@ function alpine_static_build()
         volumes = {
             { "./", "/app" },
         },
-        command ={ compiler..[[ dependencies/vibescript.c -static -DCONTENT_ENCRYPT_KEY=\\"../keys/content.h\\" -DLLM_ENCRYPT_KEY=\\"../keys/llm.h\\" -DNAME_ENCRYPT_KEY=\\"../keys/name.h\\"  -DVIBE_EXTENSION_MODULE=\\"../release/extension.c\\" -DVIBE_EXTENSION_FUNC=ouivibe  -DVIBE_EXTENSION_LIB_NAME=\\"ouivibe\\"   -o  release/alpine_static_bin.out]]}
+        command ={ compiler..[[ dependencies/vibescript.c -static -DCONTENT_ENCRYPT_KEY=\\"../keys/content.h\\" -DLLM_ENCRYPT_KEY=\\"../keys/llm.h\\" -DNAME_ENCRYPT_KEY=\\"../keys/name.h\\"  -DVIBE_EXTENSION_MODULE=\\"../release/extension.c\\" -DVIBE_EXTENSION_FUNC=ouivibe  -DVIBE_EXTENSION_LIB_NAME=\\"ouivibe\\"   -o  release/linux_bin.out]]}
         --command ="sh"
     })
 end
