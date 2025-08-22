@@ -36,6 +36,15 @@ function PushBlind.add_package(props)
 end
 function PushBlind.list_packages()
   
+    local home = get_home()
+    local packages_info_dir  = home.."/.pushblind/packages/"
+    local names = {}
+    local packages = dtw.list_dirs(packages_info_dir)
+    for i=1, #packages do
+        local name = dtw.load_file(packages_info_dir.."/"..packages[i].."/name.txt")
+        names[#names+1] = name
+    end
+    return names
 end
 
 
