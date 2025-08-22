@@ -5,7 +5,7 @@ function PushBlind.add_package(props)
     local home = os.getenv("HOME")
     local formated_package_name = dtw.generate_sha(props.name)
     local push_blind_packages_dir = home.."/.pushblind/packages/"
-    local package_dir = push_blind_packages_dir..formated_package_name
+    local package_dir = push_blind_packages_dir..formated_package_name.."/repo"
 
     if dtw.isdir(package_dir) then
         return "already_exists"
