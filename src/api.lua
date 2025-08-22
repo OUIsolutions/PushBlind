@@ -5,24 +5,27 @@ function PushBlind.add_package(props)
     local home = os.getenv("HOME")
     local formated_package_name = dtw.generate_sha(props.name)
     local push_blind_packages_dir = home.."/.pushblind/packages/"
-    local package_dir = push_blind_packages_dir..formated_package_name.."/repo"
+    local package_repo = push_blind_packages_dir..formated_package_name.."/repo"
 
-    if dtw.isdir(package_dir) then
+    if dtw.isdir(package_repo) then
         return "already_exists"
     end
     dtw.create_dir_recursively(push_blind_packages_dir)
     local git_mode = get_prop("pushblind.git_mode")
     local ok = false
     if git_mode == "https" then
-        ok = os.execute("git clone  https://github.com/"..props.package_name.." "..package_dir)
+        ok = os.execute("git clone  https://github.com/"..props.package_name.." "..package_repo)
     end
     if git_mode == "ssh" then
-        ok = os.execute("git clone git@github.com:"..props.package_name.." "..package_dir)
+        ok = os.execute("git clone git@github.com:"..props.package_name.." "..package_repo)
     end
+    local package_name_path = home .. "/.pushblind/packages/"..formated_package_name.."/name"
+    dtw.write_file(package_name_path, props.name)
 
     if not ok then
         return "not_exist"
     end
+    
     return "cloned"
 end
 function PushBlind.list_packages()
