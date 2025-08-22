@@ -1,10 +1,5 @@
-local windows_build_done = false
 function windowsi32_build()
-    if windows_build_done then
-        return
-    end
-    windows_build_done = true
-    extension_build()
+
 
     os.execute("mkdir -p release")
 
@@ -28,3 +23,11 @@ function windowsi32_build()
 
     })
 end
+
+darwin.add_recipe({
+    name=".exe",
+    requires={"linux_bin"},
+    description="make a .exe of the project",
+    outs={"release/ouivibei32.exe"},
+    callback=windowsi32_build
+})
