@@ -3,7 +3,7 @@ PushBlind.actions = {}
 
 function PushBlind.add_package(props)
     local home = os.getenv("HOME")
-    local formated_package_name = dtw.generate_sha(props.package_name)
+    local formated_package_name = dtw.generate_sha(props.name)
     local package_dir = home.."/.pushblind/packages/"..formated_package_name
 
     if dtw.isdir(package_dir) then
