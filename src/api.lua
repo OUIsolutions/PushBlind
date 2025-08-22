@@ -24,7 +24,7 @@ function PushBlind.add_package(props)
             return "not_exist"
         end
     end
-    local packages_info_dir  = home.."/.pushblind/packages/"
+    local packages_info_dir  = home.."/."..PUSH_BLIND_LOCATION.."/packages/"
     local package_info_dir = packages_info_dir..dtw.generate_sha(props.name)
     if dtw.isdir(packages_info_dir) then
         return "already_exists"
@@ -37,7 +37,7 @@ end
 function PushBlind.list_packages()
   
     local home = get_home()
-    local packages_info_dir  = home.."/.pushblind/packages/"
+    local packages_info_dir  = home.."/."..PUSH_BLIND_LOCATION.."/packages/"
     local names = {}
     local packages = dtw.list_dirs(packages_info_dir)
     for i=1, #packages do
