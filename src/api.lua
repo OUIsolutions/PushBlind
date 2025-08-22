@@ -4,15 +4,18 @@ PushBlind.actions = {}
 function PushBlind.add_package(props)
     local home = os.getenv("HOME")
     local formated_package_name = dtw.generate_sha(props.name)
-    local package_dir = home.."/.pushblind/packages/"..formated_package_name
+    local push_blind_packages_dir = home.."/.pushblind/packages/"
+    local package_dir = push_blind_packages_dir..formated_package_name
 
     if dtw.isdir(package_dir) then
-          print(private_vibescript.YELLOW.."Package already exists: "..props.name..private_vibescript.RESET)
         return "already_exists"
     end
-    
-
-    
+    dtw.create_dir_recursively(push_blind_packages_dir)
+    local ok = os.execute("git clone "..props.package_name.." "..package_dir)
+    if not ok then
+        return "not_exist"
+    end
+    return "cloned"
 end
 function PushBlind.list_packages()
     
