@@ -1,8 +1,11 @@
 PushBlind = {}
 PushBlind.actions = {}
+local function get_home()
+    return os.getenv("HOME")
+end
 
 function PushBlind.add_package(props)
-    local home = os.getenv("HOME")
+    local home = get_home()
     local formated_package_name = dtw.generate_sha(props.name)
     local push_blind_packages_dir = home.."/.pushblind/packages/"
     local package_repo = push_blind_packages_dir..formated_package_name.."/repo"
@@ -29,19 +32,19 @@ function PushBlind.add_package(props)
     return "cloned"
 end
 function PushBlind.list_packages()
-    
-    local home = os.getenv("HOME")
-    local names_dir = home.."/.pushblind/names/"
-    local names_files = dtw.list_files(names_dir,true)
+    local home = get_home()
+    local packages_dir = home.."/.pushblind/packages/"
+    local package_dirs = dtw.list_dirs(packages_dir)
     local all = {}
-    for i =1,#names_files do
-        local current_file = names_files[i]      
-        local content = dtw.load_file(current_file)
-        if content then
-            all[#all+1] = content
+    for i = 1, #package_dirs do
+        local current_dir = package_dirs[i]
+        local name_file = current_dir.."/name"
+        local name = dtw.load_file(name_file)
+        if name then
+            all[#all+1] = name
         end
     end
-    return all    
+    return all
 end
 
 function PushBlind.run_action(package_name, action_name)
