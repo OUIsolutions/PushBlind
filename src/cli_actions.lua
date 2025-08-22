@@ -12,16 +12,18 @@ function Push_blind_add_package_action()
         print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
         return 1
     end
-    local filename = argv.get_next_unused()
-    if not filename then
-        print(private_vibescript.RED.."No filename provided for the package"..private_vibescript.RESET)
-        return 1
-    end
     local name = argv.get_flag_arg_by_index({ "name" }, 1)
     if not name then
         print(private_vibescript.RED.."No name provided for the package"..private_vibescript.RESET)
         return 1
     end
+    
+    local filename = argv.get_next_unused()
+    if not filename then
+        print(private_vibescript.RED.."No filename provided for the package"..private_vibescript.RESET)
+        return 1
+    end
+
     local force = argv.flags_exist({ "force"})
     local result =PushBlind.add_package({
         package_name = package_name,
