@@ -8,7 +8,9 @@ function PushBlind.add_package(props)
 
     if dtw.isdir(package_dir) then
           print(private_vibescript.YELLOW.."Package already exists: "..props.name..private_vibescript.RESET)
+        return "already_exists"
     end
+    
 
     
 end
