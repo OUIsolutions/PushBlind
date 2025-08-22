@@ -1,1 +1,1 @@
-PUSH_BLIND_LOCATION = "./teste_pushblind"
+PUSH_BLIND_LOCATION = get_prop("pushblind_path","./teste_pushblind")
