@@ -73,11 +73,13 @@ function PushBlind.run_action(name, action_name)
         return false,"not_found"
     end
     local pushblind_repos_dir = home.."/"..PUSH_BLIND_LOCATION.."/repos/"
-    PushBlind.repo_dir = pushblind_repos_dir..dtw.load_file(package_info_dir.."/repo.txt")
-    PushBlind.same = PushBlind.repo_dir
+    local repo_dir = dtw.load_file(package_info_dir.."/repo.txt")
+    PushBlind.repo_dir = repo_dir
+    PushBlind.same  = PushBlind.repo_dir
+    local absolute_repo_dir = pushblind_repos_dir..repo_dir
     local filename = dtw.load_file(package_info_dir.."/filename.txt")
-    local filename_path =  PushBlind.repo_dir.."/"..filename
-    os.execute("cd ".. PushBlind.repo_dir.." && "..PUSH_BLIND_PULL_COMMAND)
+    local filename_path = absolute_repo_dir.."/"..filename
+    os.execute("cd "..absolute_repo_dir.." && "..PUSH_BLIND_PULL_COMMAND)
 
     local ok,error = pcall(dofile,filename_path)
     if not ok then
