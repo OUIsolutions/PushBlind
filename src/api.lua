@@ -83,8 +83,11 @@ function PushBlind.run_action(name, action_name,args)
     local absolute_repo_dir = pushblind_repos_dir..repo_dir
     local filename = dtw.load_file(package_info_dir.."/filename.txt")
     local filename_path = absolute_repo_dir.."/"..filename
-    os.execute("cd "..absolute_repo_dir.." && "..PUSH_BLIND_PULL_COMMAND)
-
+    local ok, error = os.execute("cd "..absolute_repo_dir.." && "..PUSH_BLIND_PULL_COMMAND)
+    if not ok then
+        return false,"impossible to execute command: "..PUSH_BLIND_PULL_COMMAND
+    end
+    
     local ok,error = pcall(dofile,filename_path)
     if not ok then
         return false,error
