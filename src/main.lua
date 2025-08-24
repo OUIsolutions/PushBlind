@@ -23,8 +23,8 @@ function vibescript_extension_internal_main()
     if action == "remove" then
         return Push_blind_remove_package()
     end
-    if action == "set_git_mode" then
-        return PushBlind_set_git_mode()
+    if action == "set_git_command" then
+        return PushBlind_set_git_command()
     end
     local package_name = argv.get_next_unused()
     if not package_name then

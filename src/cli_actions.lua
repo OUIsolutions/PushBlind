@@ -62,15 +62,12 @@ function Push_blind_remove_package()
     PushBlind.remove_package(name)
 end
 
-function PushBlind_set_git_mode()
-    local mode = argv.get_next_unused()
-    if not mode then
-        print(private_vibescript.RED.."No mode provided. Use 'https' or 'ssh'."..private_vibescript.RESET)
-        return 1
-    end 
-    if mode ~= "https" and mode ~= "ssh" then
-        print(private_vibescript.RED.."Invalid mode. Use 'https' or 'ssh'."..private_vibescript.RESET)
+function PushBlind_set_git_command()
+    local command = argv.get_next_unused()
+    if not command then
+        print(private_vibescript.RED.."No git command provided"..private_vibescript.RESET)
         return 1
     end
-    set_prop("pushblind.git_mode", mode)
+    set_prop("pushblind.git_command",command)
+   
 end 
