@@ -17,7 +17,7 @@ function PushBlind.add_same_repo_package(props)
     dtw.write_file(package_info_dir.."/name.txt", props.name)
     dtw.write_file(package_info_dir.."/repo.txt", PushBlind.repo_dir)
     dtw.write_file(package_info_dir.."/filename.txt", props.filename)
-
+    return true
 end
 
 function PushBlind.add_package(props)
