@@ -102,7 +102,9 @@ function PushBlind.remove_package(repo)
     PushBlind.run_action(repo,"remove")
     local packages_info_dir  = home.."/"..PUSH_BLIND_LOCATION.."/packages/"
     local package_info_dir = packages_info_dir..dtw.generate_sha(repo)
-
+    if not dtw.isdir(package_info_dir) then
+        return false,"not_found"
+    end
     local pushblind_repos_dir = home.."/"..PUSH_BLIND_LOCATION.."/repos/"
     local repo_dir = dtw.load_file(package_info_dir.."/repo.txt")
 
