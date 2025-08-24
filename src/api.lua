@@ -13,13 +13,7 @@ function PushBlind.add_package(props)
     if not dtw.isdir(package_repo) then
         dtw.create_dir_recursively(pushblind_repos_dir)
         local git_mode = get_prop("pushblind.git_mode")
-        local ok = false
-        if git_mode == "https" then
-                ok = os.execute("git clone  https://github.com/"..props.repo.." "..package_repo)
-        end
-        if git_mode == "ssh" then
-                ok = os.execute("git clone git@github.com:"..props.repo.." "..package_repo)
-        end
+        ok = os.execute(PUSH_BLIND_CLONE_COMMAND.." "..props.repo.." "..package_repo)
         if not ok then
             return "not_exist"
         end

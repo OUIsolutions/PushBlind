@@ -1,5 +1,17 @@
 
-function Push_blind_add_package_action()
+function PrivatePushBlind_Configure_entries()
+    PUSH_BLIND_LOCATION = get_prop("pushblind.path","./test_pushblind")
+    PUSH_BLIND_CLONE_COMMAND = get_prop("pushblind.git_clone","git clone")
+    if not PUSH_BLIND_CLONE_COMMAND then
+        print(private_vibescript.RED.."Git clone command not set. Use 'set_git_clone' action."..private_vibescript.RESET)
+    end
+    PUSH_BLIND_PULL_COMMAND = get_prop("pushblind.git_pull","git pull")
+    if not PUSH_BLIND_PULL_COMMAND then
+        print(private_vibescript.RED.."Git pull command not set. Use 'set_git_pull' action."..private_vibescript.RESET)
+    end
+end
+
+function PrivatePushBlind_add_package_action()
    
     local git_mode = get_prop("pushblind.git_mode")
     if not git_mode then
@@ -53,7 +65,7 @@ function PushBlind_list_packages()
 end
 
 
-function Push_blind_remove_package()
+function PrivatePushBlind_remove_package()
     local name = argv.get_next_unused()
     if not name then
         print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
@@ -62,12 +74,19 @@ function Push_blind_remove_package()
     PushBlind.remove_package(name)
 end
 
-function PushBlind_set_git_command()
+function PrivatePushBlind_set_clone_command()
     local command = argv.get_next_unused()
     if not command then
         print(private_vibescript.RED.."No git command provided"..private_vibescript.RESET)
         return 1
     end
-    set_prop("pushblind.git_command",command)
-   
+    set_prop("pushblind.git_clone",command)
 end 
+function PrivatePushBlind_pull_command()
+    local command = argv.get_next_unused()
+    if not command then
+        print(private_vibescript.RED.."No git command provided"..private_vibescript.RESET)
+        return 1
+    end
+    set_prop("pushblind.git_pull",command)
+end
