@@ -13,6 +13,9 @@ function PushBlind.add_same_repo_package(props)
     local home = get_home()
     local packages_info_dir  = home.."/"..PUSH_BLIND_LOCATION.."/packages/"
     local package_info_dir = packages_info_dir..dtw.generate_sha(props.name)
+    if dtw.isdir(package_info_dir) then
+        return false,"already_exists"
+    end
     dtw.create_dir_recursively(package_info_dir)
     dtw.write_file(package_info_dir.."/name.txt", props.name)
     dtw.write_file(package_info_dir.."/repo.txt", PushBlind.repo_dir)
