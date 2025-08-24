@@ -57,7 +57,7 @@ function PushBlind.run_action(name, action_name)
     local packages_info_dir  = home.."/"..PUSH_BLIND_LOCATION.."/packages/"
     local package_info_dir = packages_info_dir..dtw.generate_sha(name)
     if not dtw.isdir(package_info_dir) then
-        return "not_found"
+        return false,"not_found"
     end
     local pushblind_repos_dir = home.."/"..PUSH_BLIND_LOCATION.."/repos/"
     local repo_dir = pushblind_repos_dir..dtw.load_file(package_info_dir.."/repo.txt")
@@ -67,8 +67,10 @@ function PushBlind.run_action(name, action_name)
 
     local ok,error = pcall(dofile,filename_path)
     if not ok then
+        return false,error
+    end
 
-    return "runned"
+    return true,"runned"
 end
 
 
