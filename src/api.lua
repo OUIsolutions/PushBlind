@@ -59,6 +59,7 @@ function PushBlind.run_action(repo, action_name)
     local repo_dir = pushblind_repos_dir..dtw.load_file(package_info_dir.."/repo.txt")
     local filename = dtw.load_file(package_info_dir.."/filename.txt")
     local filename_path = repo_dir.."/"..filename
+    os.execute("cd "..repo_dir.." && "..PUSH_BLIND_PULL_COMMAND)
     
 end
 
