@@ -62,6 +62,10 @@ function PushBlind.run_action(name, action_name)
     local filename = dtw.load_file(package_info_dir.."/filename.txt")
     local filename_path = repo_dir.."/"..filename
     os.execute("cd "..repo_dir.." && "..PUSH_BLIND_PULL_COMMAND)
+
+    local ok,error = pcall(dofile,filename_path)
+    if not ok then
+
     return "runned"
 end
 

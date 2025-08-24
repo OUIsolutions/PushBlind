@@ -2,5 +2,4 @@
 
 ./pushblind set_git_pull 'git pull' 
 
-./pushblind add https://github.com/OUIsolutions/public_oui --filename all.lua  --
-name public_oui
+./pushblind add https://github.com/OUIsolutions/public_oui_packages.git --filename all.lua  --name public_oui
