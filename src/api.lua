@@ -31,7 +31,7 @@ end
 function PushBlind.list_packages()
   
     local home = get_home()
-    local packages_info_dir  = home.."/."..PUSH_BLIND_LOCATION.."/packages/"
+    local packages_info_dir  = home.."/"..PUSH_BLIND_LOCATION.."/packages/"
     local names = {}
     local packages = dtw.list_dirs(packages_info_dir)
     for i=1, #packages do
