@@ -44,7 +44,7 @@ function PrivatePushBlind_add_package_action()
     end 
 
     if not ok then
-        print(private_vibescript.RED.."Failed to add package "..name..". Error: "..result..private_vibescript.RESET)
+        print(private_vibescript.RED.."Package "..name.." not found "..private_vibescript.RESET)
         return 1
     end
 end
