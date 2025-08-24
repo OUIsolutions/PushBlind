@@ -31,7 +31,7 @@ function PushBlind.add_package(props)
     
     dtw.write_file(package_info_dir.."/name.txt", props.name)
     dtw.write_file(package_info_dir.."/repo.txt",formated_repo)
-
+    dtw.write_file(package_info_dir.."/filename.txt",props.filename)
     return "cloned"
 end
 function PushBlind.list_packages()
@@ -50,15 +50,16 @@ end
 
 function PushBlind.run_action(repo, action_name)
     local home = get_home()
-
-
+  
 
     local packages_info_dir  = home.."/"..PUSH_BLIND_LOCATION.."/packages/"
     local package_info_dir = packages_info_dir..dtw.generate_sha(repo)
 
     local pushblind_repos_dir = home.."/"..PUSH_BLIND_LOCATION.."/repos/"
     local repo_dir = pushblind_repos_dir..dtw.load_file(package_info_dir.."/repo.txt")
-    print(repo_dir)
+    local filename = dtw.load_file(package_info_dir.."/filename.txt")
+    local filename_path = repo_dir.."/"..filename
+    
 end
 
 
