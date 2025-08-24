@@ -77,7 +77,12 @@ function PrivatePushBlind_remove_package()
         print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
         return 1
     end
-    PushBlind.remove_package(name)
+    local ok,error = PushBlind.remove_package(name)
+    if not ok then
+        print(private_vibescript.RED.."Failed to remove package "..name..". Error: "..error..private_vibescript.RESET)
+        return 1
+    end
+    return 0
 end
 
 function PrivatePushBlind_set_clone_command()
