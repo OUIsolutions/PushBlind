@@ -59,8 +59,7 @@ Want to create your own packages for PushBlind? Check the `package_sample/` dire
 |  **File**                                                                                                           | **What is**                                |
 |---------------------------------------------------------------------------------------------------------------------|--------------------------------------------|
 |[pushblind.out](https://github.com/OUIsolutions/PushBlind/releases/download/0.4.0/pushblind.out)                   | Linux Static Binary                        |
-|[pushblind64.exe](https://github.com/OUIsolutions/PushBlind/releases/download/0.4.0/pushblind64.exe)               | Windows 64-bit Binary                      |
-|[pushblinди32.exe](https://github.com/OUIsolutions/PushBlind/releases/download/0.4.0/pushblinди32.exe)             | Windows 32-bit Binary                      |
+|[pushblindi32.exe](https://github.com/OUIsolutions/PushBlind/releases/download/0.4.0/pushblindi32.exe)               | Windows 32-bit Binary                      |
 |[pushblind.deb](https://github.com/OUIsolutions/PushBlind/releases/download/0.4.0/pushblind.deb)                   | Debian Package                             |
 |[pushblind.rpm](https://github.com/OUIsolutions/PushBlind/releases/download/0.4.0/pushblind.rpm)                   | RPM Package                                |
 |[extension.c](https://github.com/OUIsolutions/PushBlind/releases/download/0.4.0/extension.c)                       | VibeScript Extension Source                |
