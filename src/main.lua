@@ -8,6 +8,8 @@ function vibescript_extension_internal_main()
      
      private_vibescript.configure_newRawLLMFunction(config_json)
      private_vibescript.configure_props_functions(config_json)
+
+     Configure_consts()
      if not action then
          print(private_vibescript.RED.."No action provided"..private_vibescript.RESET)
          return 1
