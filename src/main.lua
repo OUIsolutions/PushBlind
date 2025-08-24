@@ -15,10 +15,8 @@ function vibescript_extension_internal_main()
     end
 
 
-     local entries_result = PrivatePushBlind_Configure_entries()
-     if entries_result ~= 0 then
-         return entries_result
-     end
+     PrivatePushBlind_Configure_entries()
+
      if not action then
          print(private_vibescript.RED.."No action provided"..private_vibescript.RESET)
          return 1

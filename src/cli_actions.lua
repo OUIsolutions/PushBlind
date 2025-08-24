@@ -1,17 +1,9 @@
 
 function PrivatePushBlind_Configure_entries()
     PUSH_BLIND_LOCATION = get_prop("pushblind.path","./test_pushblind")
-    PUSH_BLIND_CLONE_COMMAND = get_prop("pushblind.git_clone")
-    if not PUSH_BLIND_CLONE_COMMAND then
-        print(private_vibescript.RED.."Git clone command not set. Use 'set_git_clone' action."..private_vibescript.RESET)
-        return 1 
-    end
-    PUSH_BLIND_PULL_COMMAND = get_prop("pushblind.git_pull")
-    if not PUSH_BLIND_PULL_COMMAND then
-        print(private_vibescript.RED.."Git pull command not set. Use 'set_git_pull' action."..private_vibescript.RESET)
-        return 1
-    end
-    return 0
+    PUSH_BLIND_CLONE_COMMAND = get_prop("pushblind.git_clone","git clone")
+    PUSH_BLIND_PULL_COMMAND = get_prop("pushblind.git_pull","git pull")
+
 end
 
 function PrivatePushBlind_add_package_action()
