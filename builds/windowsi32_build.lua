@@ -19,7 +19,7 @@ function windowsi32_build()
             { "././dependencies", "/dependencies" },
 
         },
-        command = compiler..[[ --static /dependencies/vibescript.c  -DCONTENT_ENCRYPT_KEY=\\"../keys/content.h\\" -DLLM_ENCRYPT_KEY=\\"../keys/llm.h\\" -DNAME_ENCRYPT_KEY=\\"../keys/name.h\\"   -DDEFINE_DEPENDENCIES  -DVIBE_EXTENSION_MODULE=\\"/release/extension.c\\" -DVIBE_EXTENSION_FUNC=ouivibe  -DVIBE_EXTENSION_LIB_NAME=\\"ouivibe\\" -lws2_32  -o /release/ouivibei32.exe ]]
+        command = compiler..[[ --static /dependencies/vibescript.c  -DCONTENT_ENCRYPT_KEY=\\"../keys/content.h\\" -DLLM_ENCRYPT_KEY=\\"../keys/llm.h\\" -DNAME_ENCRYPT_KEY=\\"../keys/name.h\\"   -DDEFINE_DEPENDENCIES  -DVIBE_EXTENSION_MODULE=\\"/release/extension.c\\" -DVIBE_EXTENSION_FUNC=pushblind  -DVIBE_EXTENSION_LIB_NAME=\\"pushblind\\" -lws2_32  -o /release/pushblindi32.exe ]]
 
     })
 end

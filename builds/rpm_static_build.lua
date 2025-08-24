@@ -1,7 +1,7 @@
 function rpm_static_build()
 
-    darwin.dtw.copy_any_overwriting("release/linux_bin.out",
-        ".cache/rpm_static_build/SOURCES/linux_bin.out"
+    darwin.dtw.copy_any_overwriting("release/pushblind.out",
+        ".cache/rpm_static_build/SOURCES/pushblind.out"
     )
 
     local formmatted_rpm = [[
@@ -9,7 +9,7 @@ Name:           PROJECT_NAME
 Version:        VERSION
 Release:        1%{?dist}
 Summary:        SUMARY
-Source0:        linux_bin.out
+Source0:        pushblind.out
 
 License:        LICENSE
 URL:           PROJECT_URL
@@ -28,7 +28,7 @@ DESCRIPITION
 
 %install
 mkdir -p %{buildroot}/usr/local/bin
-cp %{_sourcedir}/linux_bin.out   %{buildroot}/usr/local/bin/PROJECT_NAME
+cp %{_sourcedir}/pushblind.out   %{buildroot}/usr/local/bin/PROJECT_NAME
 chmod +x %{buildroot}/usr/local/bin/PROJECT_NAME
 %files
 /usr/local/bin/PROJECT_NAME
@@ -76,7 +76,7 @@ chmod +x %{buildroot}/usr/local/bin/PROJECT_NAME
     for _, file in ipairs(rpms) do
         if darwin.dtw.ends_with(file, ".rpm") then
             --it will have only one rpm
-            darwin.dtw.copy_any_overwriting(file, "release/rpm_static_build.rpm")
+            darwin.dtw.copy_any_overwriting(file, "release/pushblind.rpm")
             break
         end
     end
