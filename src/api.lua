@@ -42,7 +42,7 @@ function PushBlind.add_package(props)
     end
     local packages_info_dir  = home.."/"..PUSH_BLIND_LOCATION.."/packages/"
     local package_info_dir = packages_info_dir..dtw.generate_sha(props.name)
-    if dtw.isdir(packages_info_dir) then
+    if dtw.isdir(package_info_dir) then
         return true,"already_exists"
     end
     
