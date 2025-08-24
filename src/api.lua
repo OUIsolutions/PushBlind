@@ -7,7 +7,7 @@ end
 function PushBlind.add_package(props)
     local home = get_home()
     local formated_repo = dtw.generate_sha(props.repo)
-    local pushblind_repos_dir = home..PUSH_BLIND_LOCATION.."/repos/"
+    local pushblind_repos_dir = home.."/"..PUSH_BLIND_LOCATION.."/repos/"
     local package_repo = pushblind_repos_dir..formated_repo
 
     if not dtw.isdir(package_repo) then
