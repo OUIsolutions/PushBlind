@@ -44,6 +44,19 @@ function PrivatePushBlind_add_package_action()
     end 
 
 end
+
+function PrivatePushBlind_run_action(name,action)
+
+    local result = PushBlind.run_action(name,action)
+    if result == "not_found" then
+        print(private_vibescript.RED.."Package "..name.." not found. Use 'list' action to see available packages."..private_vibescript.RESET)
+        return 1
+    elseif result == "runned" then
+        print(private_vibescript.GREEN.."Package "..name.." successfully runned."..private_vibescript.RESET)
+        return 0
+    end
+
+end
 function PrivatePushBlind_list_packages()
     local packages = PushBlind.list_packages()
     for i=1,#packages do

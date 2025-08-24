@@ -48,19 +48,21 @@ function PushBlind.list_packages()
 end
 
 
-function PushBlind.run_action(repo, action_name)
+function PushBlind.run_action(name, action_name)
     local home = get_home()
   
 
     local packages_info_dir  = home.."/"..PUSH_BLIND_LOCATION.."/packages/"
-    local package_info_dir = packages_info_dir..dtw.generate_sha(repo)
-
+    local package_info_dir = packages_info_dir..dtw.generate_sha(name)
+    if not dtw.isdir(package_info_dir) then
+        return "not_found"
+    end
     local pushblind_repos_dir = home.."/"..PUSH_BLIND_LOCATION.."/repos/"
     local repo_dir = pushblind_repos_dir..dtw.load_file(package_info_dir.."/repo.txt")
     local filename = dtw.load_file(package_info_dir.."/filename.txt")
     local filename_path = repo_dir.."/"..filename
     os.execute("cd "..repo_dir.." && "..PUSH_BLIND_PULL_COMMAND)
-    
+    return "runned"
 end
 
 
