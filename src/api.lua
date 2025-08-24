@@ -66,7 +66,7 @@ function PushBlind.list_packages()
 end
 
 
-function PushBlind.run_action(name, action_name)
+function PushBlind.run_action(name, action_name,args)
     local home = get_home()
   
 
@@ -88,7 +88,7 @@ function PushBlind.run_action(name, action_name)
     if not ok then
         return false,error
     end
-    local ok,error = pcall(PushBlind.actions[action_name])
+    local ok,error = pcall(PushBlind.actions[action_name],args)
     if not ok then
         return false,error
     end
@@ -104,10 +104,10 @@ end
 
 
 function PushBlind.install_package(repo)
-   PushBlind.run_action(repo,"install")
+  return  PushBlind.run_action(repo,"install")
 end
 
 function PushBlind.update_package(repo)
-    PushBlind.run_action(repo,"update")    
+   return  PushBlind.run_action(repo,"update")    
 end
 
