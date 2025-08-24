@@ -31,7 +31,11 @@ function vibescript_extension_internal_main()
         return PrivatePushBlind_remove_package()
     end
   
-
+    if action == "version" or action == "--version" or action == "-v" then
+        print("PushBlind version: 0.5.0")
+        return 0
+    end
+    
     local package_name = argv.get_next_unused()
     if not package_name then
         print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
