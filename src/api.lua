@@ -98,7 +98,31 @@ end
 
 
 function PushBlind.remove_package(repo)
-    
+    local home = get_home()
+    PushBlind.run_action(repo,"remove")
+    local packages_info_dir  = home.."/"..PUSH_BLIND_LOCATION.."/packages/"
+    local package_info_dir = packages_info_dir..dtw.generate_sha(repo)
+
+    local pushblind_repos_dir = home.."/"..PUSH_BLIND_LOCATION.."/repos/"
+    local repo_dir = dtw.load_file(package_info_dir.."/repo.txt")
+
+
+    local  repo_stil_referenced = false
+    local packages = dtw.list_dirs(packages_info_dir)
+    for i=1, #packages do
+        local repo = dtw.load_file(packages_info_dir.."/"..packages[i].."/repo.txt")
+        if repo == repo_dir then
+            repo_stil_referenced = true
+            break
+        end
+    end
+    if not repo_stil_referenced then
+        local absolute_repo_dir = pushblind_repos_dir..repo_dir
+        dtw.remove_any(absolute_repo_dir)
+    end
+
+    dtw.remove_any(package_info_dir)
+    return "removed"
 end
 
 
