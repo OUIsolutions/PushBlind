@@ -51,4 +51,59 @@ release/
 
 with the command:
 ```bash
+darwin run_blueprint --target all
+```
 
+you also can list all the builds with:
+
+```bash
+darwin list_blueprints
+```
+you will have the following results:
+```txt
+Available build: .deb
+Description: make a .deb of the project
+Outputs: 
+    release/debian_static.deb
+=======================================
+Available build: extension
+Description: make the C extension
+Outputs: 
+    release/extension.c
+=======================================
+Available build: linux_bin
+Description: make a static compiled linux binary of the project
+Outputs: 
+    release/pushblind.out
+=======================================
+Available build: local_unix_bin
+Description: make a local compiled unix binary of the project
+Outputs: 
+    release/local_unix_bin.out
+=======================================
+Available build: .rpm
+Description: make a .rpm of the project
+Outputs: 
+    release/rpm_static_build.rpm
+=======================================
+Available build: .exe
+Description: make a .exe of the project
+Outputs: 
+    release/ouivibei32.exe
+=======================================
+```
+
+#### Copiling from source
+if you want to compile the extension you can just follow these steps
+
+-- generate extension with:
+
+```bash
+darwin run_blueprint --target extension
+```
+
+since, pushblind its  a [vibescript](https://github.com/OUIsolutions/VibeScript) estension, you can compile it with: 
+
+```bash
+gcc  dependencies/vibescript.c -DCONTENT_ENCRYPT_KEY=\"../keys/content.h\" -DLLM_ENCRYPT_KEY=\"../keys/llm.h\" -DNAME_ENCRYPT_KEY=\"../keys/name.h\"  -DVIBE_EXTENSION_MODULE=\"../release/pushblind_extension.c\" -DVIBE_EXTENSION_FUNC=pushblind -DVIBE_EXTENSION_LIB_NAME=\"pushblind\"   -o pushblind
+```
