@@ -26,23 +26,27 @@ function PrivatePushBlind_add_package_action()
     end
 
     local force = argv.flags_exist({ "force"})
-    local result =PushBlind.add_package({
+    local ok,result =PushBlind.add_package({
         repo = repo,
         filename = filename,
         name = name,
         force=force
     })
-    if result == "already_exists" then
-        print(private_vibescript.YELLOW.."Package "..name.." already exists. Use --force to overwrite."..private_vibescript.RESET)
-        return 0
-    elseif result == "not_exist" then
-        print(private_vibescript.RED.."Package "..repo.." does not exist on GitHub."..private_vibescript.RESET)
-        return 1
-    elseif result == "cloned" then
-        print(private_vibescript.GREEN.."Package "..name.." successfully cloned."..private_vibescript.RESET)
-        return 0
+    if ok then
+        if result == "already_exists" then
+            print(private_vibescript.YELLOW.."Package "..name.." already exists. Use --force to overwrite."..private_vibescript.RESET)
+            return 0
+        end 
+        if result == "cloned" then
+            print(private_vibescript.GREEN.."Package "..name.." successfully cloned."..private_vibescript.RESET)
+            return 0
+        end 
     end 
 
+    if not ok then
+        print(private_vibescript.RED.."Failed to add package "..name..". Error: "..result..private_vibescript.RESET)
+        return 1
+    end
 end
 
 function PrivatePushBlind_run_action(name,action)
@@ -56,7 +60,7 @@ function PrivatePushBlind_run_action(name,action)
         print(private_vibescript.RED.."Package "..name.." failed to run. Error: "..result..private_vibescript.RESET)
         return 1
     end
-    
+
     return 0
 
 end

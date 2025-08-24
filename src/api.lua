@@ -20,20 +20,22 @@ function PushBlind.add_package(props)
         dtw.create_dir_recursively(pushblind_repos_dir)
         ok = os.execute(PUSH_BLIND_CLONE_COMMAND.." "..props.repo.." "..package_repo)
         if not ok then
-            return "not_exist"
+            return false,"not_found"
         end
     end
     local packages_info_dir  = home.."/"..PUSH_BLIND_LOCATION.."/packages/"
     local package_info_dir = packages_info_dir..dtw.generate_sha(props.name)
     if dtw.isdir(packages_info_dir) then
-        return "already_exists"
+        return true,"already_exists"
     end
     
     dtw.write_file(package_info_dir.."/name.txt", props.name)
     dtw.write_file(package_info_dir.."/repo.txt",formated_repo)
     dtw.write_file(package_info_dir.."/filename.txt",props.filename)
-    return "cloned"
+    return true,"cloned"
 end
+
+
 function PushBlind.list_packages()
   
     local home = get_home()
