@@ -34,9 +34,10 @@ function PushBlind.add_package(props)
 
     if not dtw.isdir(package_repo) then
         dtw.create_dir_recursively(pushblind_repos_dir)
-        ok = os.execute(PUSH_BLIND_CLONE_COMMAND.." "..props.repo.." "..package_repo)
+        local command = PUSH_BLIND_CLONE_COMMAND.." "..props.repo.." "..package_repo
+        ok = os.execute(command)
         if not ok then
-            return false,"not_found"
+            return false,"impossible to execute command:"..command
         end
     end
     local packages_info_dir  = home.."/"..PUSH_BLIND_LOCATION.."/packages/"
