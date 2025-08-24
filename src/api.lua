@@ -92,7 +92,7 @@ function PushBlind.run_action(name, action_name,args)
     if not ok then
         return false,error
     end
-    local ok,error = pcall(PushBlind.actions[action_name],args)
+    local ok,error = pcall(PushBlind.actions[action_name],absolute_repo_dir,args)
     if not ok then
         return false,error
     end
