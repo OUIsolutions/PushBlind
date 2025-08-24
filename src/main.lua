@@ -3,11 +3,21 @@ function vibescript_extension_internal_main()
      if not config_json.platform_credentials then
           config_json.platform_credentials = {}
      end
-     --dtw.write_file("teste.json",json.dumps_to_string(config_json))
-     local action =   argv.get_next_unused()
-     
      private_vibescript.configure_newRawLLMFunction(config_json)
      private_vibescript.configure_props_functions(config_json)
+     
+
+     local action =   argv.get_next_unused()
+    
+    
+
+    if action == "set_git_clone" then
+        return PrivatePushBlind_set_clone_command()
+    end
+    if action == "set_git_pull" then
+        return PrivatePushBlind_pull_command()
+    end
+    
 
      local entries_result = PrivatePushBlind_Configure_entries()
      if entries_result ~= 0 then
@@ -26,12 +36,7 @@ function vibescript_extension_internal_main()
     if action == "remove" then
         return PrivatePushBlind_remove_package()
     end
-    if action == "set_git_clone" then
-        return PrivatePushBlind_set_clone_command()
-    end
-    if action == "set_git_pull" then
-        return PrivatePushBlind_pull_command()
-    end
+  
 
     local package_name = argv.get_next_unused()
     if not package_name then
