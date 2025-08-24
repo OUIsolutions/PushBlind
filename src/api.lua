@@ -3,6 +3,12 @@ PushBlind.actions = {}
 local function get_home()
     return os.getenv("HOME")
 end
+function PrivatePushBlind_Configure_entries()
+    PUSH_BLIND_LOCATION = get_prop("pushblind.path",".pushblind")
+    PUSH_BLIND_CLONE_COMMAND = get_prop("pushblind.git_clone","git clone")
+    PUSH_BLIND_PULL_COMMAND = get_prop("pushblind.git_pull","git pull")
+
+end
 
 function PushBlind.add_package(props)
     local home = get_home()
@@ -43,7 +49,17 @@ end
 
 
 function PushBlind.run_action(repo, action_name)
-   
+    local home = get_home()
+
+
+
+    local packages_info_dir  = home.."/"..PUSH_BLIND_LOCATION.."/packages/"
+    local package_info_dir = packages_info_dir..dtw.generate_sha(repo)
+
+    local pushblind_repos_dir = home.."/"..PUSH_BLIND_LOCATION.."/repos/"
+
+    local repo_dir = pushblind_repos_dir..dtw.load_file(package_info_dir.."/repo.txt")
+    print(repo_dir)
 end
 
 
