@@ -37,8 +37,7 @@ function vibescript_extension_internal_main()
         print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
         return 1
     end
-    PushBlind.run_action(package_name, action)
-    return 0
+    return PrivatePushBlind_run_action(package_name, action)
 end 
 
 function vibescript_extension_main()

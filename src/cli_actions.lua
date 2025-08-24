@@ -52,7 +52,6 @@ function PrivatePushBlind_run_action(name,action)
         print(private_vibescript.RED.."Package "..name.." not found. Use 'list' action to see available packages."..private_vibescript.RESET)
         return 1
     elseif result == "runned" then
-        print(private_vibescript.GREEN.."Package "..name.." successfully runned."..private_vibescript.RESET)
         return 0
     end
 
