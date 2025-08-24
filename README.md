@@ -19,263 +19,271 @@
 
 ---
 
-## Overview
+### Overview
 
-PushBlind is a package manager built as a [VibeScript](https://github.com/OUIsolutions/VibeScript) extension. It provides a streamlined interface for managing Git-hosted packages, allowing developers to add, install, update, and remove packages from repositories with simple commands.
+PushBlind is a lightweight package manager for Lua-based applications. It provides a streamlined interface for managing GitHub-hosted packages, eliminating the complexity of traditional dependency management:
 
-**Key capabilities:**
-- **Add packages from Git repositories** (GitHub, GitLab, etc.)
-- **Install and manage package dependencies** 
-- **Update packages to latest versions**
-- **Remove packages when no longer needed**
-- **Execute package actions** through a unified CLI interface
+1. **Add packages from GitHub repositories** 
+2. **Install and manage package dependencies**
+3. **Update packages to latest versions**
+4. **Remove packages when no longer needed**
 
 This package manager is designed for developers who need to:
-- Manage project automation scripts and tools
-- Download and install packages from Git repositories  
+- Manage Lua packages and dependencies
+- Download and install packages from GitHub repositories
 - Keep packages updated with latest versions
+- Organize and maintain project dependencies
 - Create custom package definitions for distribution
-- Execute predefined actions from packages
 
-## Key Features
+### Key Features
 
-- **Git Integration** - Direct package installation from any Git repository
-- **Action-Based System** - Packages define actions that can be executed via CLI
+- **GitHub Integration** - Direct package installation from GitHub repositories
+- **Version Control** - Git-based package management with automatic updates
+- **Custom Package Creation** - Create your own package definitions with install/update scripts
 - **Cross-platform Support** - Compatible with Windows and Linux systems
-- **Configurable Git Commands** - Customize git clone and pull commands
-- **Package Actions** - Execute package-defined actions like `build_project`, `deploy`, etc.
-- **Meta Packages** - Packages that install or manage other packages
+- **Minimal Configuration** - Simple setup with SSH or HTTPS Git modes
+- **Package Isolation** - Each package is managed independently in separate directories
 
-## Package Development
+### Package Development
 
-Want to create your own packages for PushBlind? Check the [Package Creation Guide](docs/packing.md) for detailed instructions on creating packages with install/update/remove actions and custom functionality.
+Want to create your own packages for PushBlind? Check the `package_sample/` directory for examples showing how to create package definitions with install and update functions.
 
 ---
 
 ## Releases
 
-PushBlind can be built in multiple formats. Based on your system, choose the appropriate build:
+|  **File**                                                                                                           | **What is**                                |
+|---------------------------------------------------------------------------------------------------------------------|--------------------------------------------|
+|[pushblind.out](https://github.com/OUIsolutions/PushBlind/releases/download/0.0.1/pushblind.out)                   | Linux Static Binary                        |
+|[pushblind64.exe](https://github.com/OUIsolutions/PushBlind/releases/download/0.0.1/pushblind64.exe)               | Windows 64-bit Binary                      |
+|[pushblinди32.exe](https://github.com/OUIsolutions/PushBlind/releases/download/0.0.1/pushblinди32.exe)             | Windows 32-bit Binary                      |
+|[pushblind.deb](https://github.com/OUIsolutions/PushBlind/releases/download/0.0.1/pushblind.deb)                   | Debian Package                             |
+|[pushblind.rpm](https://github.com/OUIsolutions/PushBlind/releases/download/0.0.1/pushblind.rpm)                   | RPM Package                                |
+|[extension.c](https://github.com/OUIsolutions/PushBlind/releases/download/0.0.1/extension.c)                       | VibeScript Extension Source                |
 
-| **Build Target** | **Command** | **Output** | **Description** |
-|------------------|-------------|------------|-----------------|
-| `.deb` | `darwin run_blueprint --target .deb` | `release/debian_static.deb` | Debian package |
-| `extension` | `darwin run_blueprint --target extension` | `release/extension.c` | C extension source |
-| `linux_bin` | `darwin run_blueprint --target linux_bin` | `release/pushblind.out` | Static Linux binary |
-| `local_unix_bin` | `darwin run_blueprint --target local_unix_bin` | `release/local_unix_bin.out` | Local Unix binary |
-| `.rpm` | `darwin run_blueprint --target .rpm` | `release/rpm_static_build.rpm` | RPM package |
-| `.exe` | `darwin run_blueprint --target .exe` | `release/ouivibei32.exe` | Windows executable |
+## Installation Tutorials
 
-### Build All Targets
-```bash
-darwin run_blueprint --target all
-```
+| **Method**                                                      | **Description**                                       |
+|----------------------------------------------------------------|-------------------------------------------------------|
+| [Binary Installation](docs/instalations/binary.md)            | Direct binary installation (the easiest)             |
+| [Package Installation](docs/instalations/package.md)          | System package installation (.deb/.rpm)              |
+| [VibeScript Extension](docs/instalations/extension.md)        | Install as VibeScript extension                       |
+| [Build from Source](docs/instalations/build_from_source.md)   | Building PushBlind from source code                  |
 
-## Installation Methods
+## [CLI Commands Reference](docs/cli_reference.md)
+Click here [CLI Commands Reference](docs/cli_reference.md) to see the complete list of available commands.
 
-| **Method** | **Description** |
-|------------|-----------------|
-| [Build from Source](docs/build_from_scrath.md) | Complete guide for building PushBlind from source code |
-| Manual Compilation | Build the VibeScript extension manually using gcc |
+## Usage Tutorials 
 
-## Documentation
-
-| **Guide** | **Description** |
-|-----------|-----------------|
-| [CLI Usage](docs/cli_usage.md) | Complete command-line interface reference |
-| [Package Creation](docs/packing.md) | How to create your own PushBlind packages |
-| [Build from Source](docs/build_from_scrath.md) | Step-by-step source building instructions | 
+| **Tutorial**                                                    | **Description**                                         |
+|-----------------------------------------------------------------|---------------------------------------------------------|
+| [Getting Started](docs/tutorials/getting_started.md)           | Basic setup and first package installation             |
+| [Git Configuration](docs/tutorials/git_configuration.md)       | Setting up SSH or HTTPS mode for Git operations        |
+| [Package Management](docs/tutorials/package_management.md)     | Adding, installing, updating and removing packages     |
+| [Creating Packages](docs/tutorials/creating_packages.md)       | How to create your own PushBlind packages              |
+| [Package Structure](docs/tutorials/package_structure.md)       | Understanding package file structure and conventions   |
+| [Advanced Usage](docs/tutorials/advanced_usage.md)             | Advanced features and customization options            |
 
 ## CLI Usage
 
-### Configuration Commands
+### Basic Commands
 
-#### Set Git Commands
-Configure git commands used by PushBlind:
+#### Set Git Mode
+Configure whether to use HTTPS or SSH for Git operations:
 ```bash
-pushblind set_git_clone "git clone"
-pushblind set_git_pull "git pull"
+pushblind set_git_mode https
+# or
+pushblind set_git_mode ssh
 ```
-
-### Package Management
 
 #### Add Package
-Add a package from a Git repository:
+Add a package from a GitHub repository:
 ```bash
-pushblind add <repository_url> <entry_file> --name <package_name>
+pushblind add OUIsolutions/ouivibe ouivibe.lua --name ouivibe
+pushblind add user/repository package_file.lua --name my_package
 ```
 
-Example:
+#### List Packages
+List all installed packages:
 ```bash
-pushblind add https://github.com/OUIsolutions/public_oui_packages.git all.lua --name public_oui
+pushblind list
 ```
 
 #### Install Package
-Install a package:
+Install or reinstall a package:
 ```bash
-pushblind install <package_name>
+pushblind install ouivibe
+pushblind install my_package
 ```
 
 #### Update Package
 Update a package to the latest version:
 ```bash
-pushblind update <package_name>
+pushblind update ouivibe
+pushblind update my_package
 ```
 
 #### Remove Package
-Remove a package:
+Remove a package and its files:
 ```bash
-pushblind remove <package_name>
+pushblind remove ouivibe
+pushblind remove my_package
 ```
 
-#### Execute Package Actions
-Execute actions defined by packages:
+#### Force Operations
+Use `--force` flag to overwrite existing packages:
 ```bash
-pushblind <action_name> <package_name>
+pushblind add OUIsolutions/ouivibe ouivibe.lua --name ouivibe --force
 ```
 
-Example:
-```bash
-pushblind build_project my_package
-```
+## Package Creation Guide
 
-## Package Creation
+### Basic Package Structure
 
-PushBlind packages are Lua files that define actions for automation tasks. Each package must implement three core actions:
-
-### Required Actions
+Create a Lua file with `install` and `update` functions:
 
 ```lua
--- Required: Install the package
-function PushBlind.actions.install()
-    print("Installing package...")
+function install(running_file)
     -- Installation logic here
-    return true
+    print("Installing package...")
+    
+    -- Example: Download and install a binary
+    os.execute("curl -L https://example.com/binary -o binary")
+    os.execute("sudo chmod +x binary")
+    os.execute("sudo mv binary /usr/bin/")
+    
+    return true  -- Return true on success, false on failure
 end
 
--- Required: Update the package  
-function PushBlind.actions.update()
-    print("Updating package...")
+function update(running_file)
     -- Update logic here
+    print("Updating package...")
+    
+    -- Example: Re-download latest version
+    os.execute("curl -L https://example.com/latest/binary -o binary")
+    os.execute("sudo chmod +x binary")
+    os.execute("sudo mv binary /usr/bin/")
+    
+    return true  -- Return true on success, false on failure
+end
+```
+
+### Package Examples
+
+#### Simple Binary Installation
+```lua
+function install(running_file)
+    -- Download and install a binary tool
+    dtw.remove_any("mytool.out")
+    os.execute('gh release download --repo user/mytool --pattern "mytool.out"')
+    os.execute("sudo chmod +x mytool.out")
+    os.execute("sudo mv mytool.out /usr/bin/mytool")
     return true
 end
 
--- Required: Remove the package
-function PushBlind.actions.remove()
-    print("Removing package...")
-    -- Cleanup logic here
+function update(running_file)
+    -- Update to latest version
+    dtw.remove_any("mytool.out")
+    os.execute('gh release download --repo user/mytool --pattern "mytool.out"')
+    os.execute("sudo chmod +x mytool.out")
+    os.execute("sudo mv mytool.out /usr/bin/mytool")
     return true
 end
 ```
 
-### Custom Actions
-
-Add any number of custom actions:
-
+#### Chrome Automation Tools Installation
 ```lua
--- Custom action example
-function PushBlind.actions.build_project()
-    print("Building project...")
-    -- Build logic here
+function install()
+    -- Remove existing installation
+    dtw.remove_any(os.getenv("HOME") .. "/oui_chrome")
+    
+    -- Download Chrome and ChromeDriver
+    os.execute("curl -L https://storage.googleapis.com/chrome-for-testing-public/138.0.7204.94/linux64/chromedriver-linux64.zip -o chromedriver.zip")
+    os.execute("mkdir -p ~/oui_chrome")
+    os.execute("curl -L https://storage.googleapis.com/chrome-for-testing-public/138.0.7204.94/linux64/chrome-linux64.zip -o chrome-linux64.zip")
+    os.execute("unzip chromedriver.zip -d ~/oui_chrome && unzip chrome-linux64.zip -d ~/oui_chrome")
+    os.execute("rm *.zip")
+    
     return true
 end
 
-function PushBlind.actions.deploy()
-    print("Deploying application...")
-    -- Deployment logic here
-    return true
+function update()
+    -- This package doesn't support updates
+    return false
 end
 ```
 
-### Meta Packages
-
-Meta packages can install other packages:
-
+#### Meta Package (Installing Multiple Packages)
 ```lua
-function PushBlind.actions.update()
+function install(running_file)
+    print("Meta package cannot be directly installed")
+    return false 
+end
+
+function update(running_file)
+    -- Add multiple related packages
     PushBlind.add_package({
-        repo = PushBlind.same, -- Current repository
-        filename = "component1.lua",
-        name = "component1",
+        package_name = "OUIsolutions/private_oui_packages",
+        filename = "ouivibe.lua",
+        name = "ouivibe",
         force = false
     })
-    return true
+    PushBlind.add_package({
+        package_name = "OUIsolutions/private_oui_packages",
+        filename = "chrome_automations.lua",
+        name = "chrome_automations",
+        force = false
+    })
+    return true 
 end
 ```
 
-For detailed package creation instructions, see the [Package Creation Guide](docs/packing.md).
+### Package Guidelines
+
+1. **Always return boolean values** from `install` and `update` functions
+2. **Handle errors gracefully** and provide meaningful feedback
+3. **Use absolute paths** when possible to avoid directory issues
+4. **Clean up temporary files** after installation
+5. **Test both install and update functions** thoroughly
+6. **Document package requirements** and dependencies
+7. **Use version-specific downloads** when available
+
+### Package File Naming
+
+- Use descriptive filenames that match the package purpose
+- Common patterns: `package_name.lua`, `tool_installer.lua`
+- Keep filenames simple and without spaces
+
+### Testing Your Package
+
+1. Create your package file in a GitHub repository
+2. Add it to PushBlind: `pushblind add user/repo package.lua --name test_package`
+3. Install it: `pushblind install test_package`
+4. Test the functionality
+5. Update it: `pushblind update test_package`
+6. Remove if needed: `pushblind remove test_package`
 
 ## Build Instructions
 
-### Prerequisites
-
-Before building, ensure you have:
-- `curl` - for downloading dependencies
-- `gcc` - for compiling C code  
-- `sudo` privileges - for installing system-wide tools
-
-### Install Required Tools
-
-#### 1. Install Darwin Build System (version 0.12.0)
-
-**Linux:**
+### Build All Platforms
 ```bash
-curl -L https://github.com/OUIsolutions/Darwin/releases/download/0.12.0/darwin_linux_bin.out -o darwin.out
-chmod +x darwin.out
-sudo mv darwin.out /usr/local/bin/darwin
+darwin run_blueprint build/ --mode folder extension_build alpine_static_build windowsi32_build windows64_build rpm_static_build debian_static_build --contanizer podman
 ```
 
-**macOS:**
+### Local Linux Build
 ```bash
-curl -L https://github.com/OUIsolutions/Darwin/releases/download/0.12.0/darwin.c -o darwin.c
-gcc darwin.c -o darwin.out
-sudo mv darwin.out /usr/local/bin/darwin
-rm darwin.c
+darwin run_blueprint build/ --mode folder local_linux_build
 ```
 
-#### 2. Install KeyObfuscate
+## Directory Structure
 
-**Linux:**
-```bash
-curl -L https://github.com/OUIsolutions/key_obfuscate/releases/download/0.0.1/KeyObfuscate.out -o KeyObfuscate
-sudo chmod +x KeyObfuscate
-sudo mv KeyObfuscate /bin/KeyObfuscate
 ```
-
-#### 3. Generate Security Keys
-
-```bash
-mkdir -p keys
-KeyObfuscate --entry 'your-content-password' --project_name 'content' --output 'keys/content.h'
-KeyObfuscate --entry 'your-llm-password' --project_name 'llm' --output 'keys/llm.h'
-KeyObfuscate --entry 'your-name-password' --project_name 'name' --output 'keys/name.h'
+~/.pushblind/
+├── packages/          # Downloaded package repositories
+│   └── user_repo/     # Individual package directories
+└── names/             # Package name mappings
+    └── *.txt          # Name hash files
 ```
-
-### Build Commands
-
-#### Build All Targets
-```bash
-darwin run_blueprint --target all
-```
-
-#### Manual Compilation
-```bash
-# Generate extension
-darwin run_blueprint --target extension
-
-# Compile with GCC
-gcc dependencies/vibescript.c \
-    -DCONTENT_ENCRYPT_KEY=\"../keys/content.h\" \
-    -DLLM_ENCRYPT_KEY=\"../keys/llm.h\" \
-    -DNAME_ENCRYPT_KEY=\"../keys/name.h\" \
-    -DVIBE_EXTENSION_MODULE=\"../release/pushblind_extension.c\" \
-    -DVIBE_EXTENSION_FUNC=pushblind \
-    -DVIBE_EXTENSION_LIB_NAME=\"pushblind\" \
-    -o pushblind
-```
-
-For complete build instructions, see [Build from Source](docs/build_from_scrath.md).
-
----
 
 ## 📄 License
 
