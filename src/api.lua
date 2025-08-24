@@ -9,8 +9,21 @@ function PrivatePushBlind_Configure_entries()
     PUSH_BLIND_PULL_COMMAND = get_prop("pushblind.git_pull","git pull")
 
 end
+function PushBlind.add_same_repo_package(props)
+    local home = get_home()
+    local packages_info_dir  = home.."/"..PUSH_BLIND_LOCATION.."/packages/"
+    local package_info_dir = packages_info_dir..dtw.generate_sha(props.name)
+    dtw.create_dir_recursively(package_info_dir)
+    dtw.write_file(package_info_dir.."/name.txt", props.name)
+    dtw.write_file(package_info_dir.."/repo.txt", PushBlind.repo_dir)
+    dtw.write_file(package_info_dir.."/filename.txt", props.filename)
+
+end
 
 function PushBlind.add_package(props)
+    if props.repo == PushBlind.repo_dir then
+        return PushBlind.add_same_repo_package(props)
+    end
     local home = get_home()
     local formated_repo = dtw.generate_sha(props.repo)
     local pushblind_repos_dir = home.."/"..PUSH_BLIND_LOCATION.."/repos/"
@@ -61,6 +74,7 @@ function PushBlind.run_action(name, action_name)
     end
     local pushblind_repos_dir = home.."/"..PUSH_BLIND_LOCATION.."/repos/"
     PushBlind.repo_dir = pushblind_repos_dir..dtw.load_file(package_info_dir.."/repo.txt")
+    PushBlind.same = PushBlind.repo_dir
     local filename = dtw.load_file(package_info_dir.."/filename.txt")
     local filename_path =  PushBlind.repo_dir.."/"..filename
     os.execute("cd ".. PushBlind.repo_dir.." && "..PUSH_BLIND_PULL_COMMAND)
