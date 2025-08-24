@@ -9,23 +9,30 @@ function vibescript_extension_internal_main()
      private_vibescript.configure_newRawLLMFunction(config_json)
      private_vibescript.configure_props_functions(config_json)
 
-     Configure_consts()
+     local entries_result = PrivatePushBlind_Configure_entries()
+     if entries_result ~= 0 then
+         return entries_result
+     end
      if not action then
          print(private_vibescript.RED.."No action provided"..private_vibescript.RESET)
          return 1
      end
      if action == "add" then
-         return Push_blind_add_package_action()
+         return PrivatePushBlind_add_package_action()
      end
     if action == "list" then
-        return PushBlind_list_packages()
+        return PrivatePushBlind_list_packages()
     end
     if action == "remove" then
-        return Push_blind_remove_package()
+        return PrivatePushBlind_remove_package()
     end
-    if action == "set_git_command" then
-        return PushBlind_set_git_command()
+    if action == "set_git_clone" then
+        return PrivatePushBlind_set_clone_command()
     end
+    if action == "set_git_pull" then
+        return PrivatePushBlind_pull_command()
+    end
+
     local package_name = argv.get_next_unused()
     if not package_name then
         print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
