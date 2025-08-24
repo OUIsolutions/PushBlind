@@ -51,13 +51,10 @@ end
 
 function PrivatePushBlind_run_action(name,action)
 
-    local result = PushBlind.run_action(name,action)
-    if result == "not_found" then
-        print(private_vibescript.RED.."Package "..name.." not found. Use 'list' action to see available packages."..private_vibescript.RESET)
-        return 1
-    end
-    if result ~= "runned" then
-        print(private_vibescript.RED.."Package "..name.." failed to run. Error: "..result..private_vibescript.RESET)
+    local ok,result = PushBlind.run_action(name,action)
+
+    if not ok then
+        print(private_vibescript.RED.."Failed to run action "..action.." on package "..name..". Error: "..result..private_vibescript.RESET)
         return 1
     end
 
