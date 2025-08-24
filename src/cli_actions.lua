@@ -1,6 +1,6 @@
 
 function PrivatePushBlind_Configure_entries()
-    PUSH_BLIND_LOCATION = get_prop("pushblind.path","./test_pushblind")
+    PUSH_BLIND_LOCATION = get_prop("pushblind.path",".pushblind")
     PUSH_BLIND_CLONE_COMMAND = get_prop("pushblind.git_clone","git clone")
     PUSH_BLIND_PULL_COMMAND = get_prop("pushblind.git_pull","git pull")
 
