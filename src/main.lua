@@ -1,10 +1,7 @@
 function vibescript_extension_internal_main()
-     local config_json = private_vibescript.get_config_json()
-     if not config_json.platform_credentials then
-          config_json.platform_credentials = {}
-     end
-     private_vibescript.configure_newRawLLMFunction(config_json)
-     private_vibescript.configure_props_functions(config_json)
+     private_vibescript.configure_props_functions()
+    private_vibescript.configure_paths()
+     private_vibescript.configure_newRawLLMFunction()
 
     local action =   argv.get_next_unused()
     if action == "set_git_clone" then
