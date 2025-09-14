@@ -30,33 +30,6 @@ sudo mv darwin.out /usr/local/bin/darwin
 rm darwin.c
 ```
 
-### 2. Install KeyObfuscate
-
-KeyObfuscate generates encrypted security keys that protect your application's sensitive data.
-
-#### Linux Installation
-```bash
-curl -L https://github.com/OUIsolutions/key_obfuscate/releases/download/0.0.1/KeyObfuscate.out -o KeyObfuscate
-sudo chmod +x KeyObfuscate
-sudo mv KeyObfuscate /bin/KeyObfuscate
-```
-
-### 3. Generate Security Keys
-
-Create the required encryption keys for your build. Replace the example passwords with your own secure strings.
-
-```bash
-# Create the keys directory
-mkdir -p keys
-
-# Generate three security keys with your custom passwords
-KeyObfuscate --entry 'your-content-password' --project_name 'content' --output 'keys/content.h'
-KeyObfuscate --entry 'your-llm-password' --project_name 'llm' --output 'keys/llm.h'
-KeyObfuscate --entry 'your-name-password' --project_name 'name' --output 'keys/name.h'
-```
-
-**Important:** Store these passwords securely. You will need them to decrypt the application data later.
-
 ## Building the Project
 
 ### Build All Targets
