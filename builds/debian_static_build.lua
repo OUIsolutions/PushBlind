@@ -24,13 +24,13 @@ Description: SUMARY
     darwin.dtw.copy_any_overwriting(
 
         "release/pushblind.out",
-        '.cache/debian_static_build/project/usr/local/bin/' .. PROJECT_NAME
+        '.cache/debian_static_build/project/bin/' .. PROJECT_NAME
     )
     local POST_INSTALL = 
     [[
         #!/bin/sh
         set -e
-        chmod 755 /usr/local/bin/PROJECT_NAME
+        chmod 755 /bin/PROJECT_NAME
         exit 0
 
     ]]

@@ -28,10 +28,10 @@ DESCRIPITION
 
 %install
 mkdir -p %{buildroot}/usr/local/bin
-cp %{_sourcedir}/pushblind.out   %{buildroot}/usr/local/bin/PROJECT_NAME
-chmod +x %{buildroot}/usr/local/bin/PROJECT_NAME
+cp %{_sourcedir}/pushblind.out   %{buildroot}/bin/PROJECT_NAME
+chmod +x %{buildroot}/bin/PROJECT_NAME
 %files
-/usr/local/bin/PROJECT_NAME
+/bin/PROJECT_NAME
 
 %changelog
 * TIMEZONE - FULLNAME EMAIL  - 1.0.0-1
