@@ -31,6 +31,10 @@ function PushBlind.add_package(props)
     local formated_repo = dtw.generate_sha(props.repo)
     local pushblind_repos_dir = home.."/"..PUSH_BLIND_LOCATION.."/repos/"
     local package_repo = pushblind_repos_dir..formated_repo
+    
+    if props.force then  
+        dtw.remove_any(package_repo)
+    end
 
     if not dtw.isdir(package_repo) then
         dtw.create_dir_recursively(pushblind_repos_dir)
@@ -43,7 +47,10 @@ function PushBlind.add_package(props)
     local packages_info_dir  = home.."/"..PUSH_BLIND_LOCATION.."/packages/"
     local package_info_dir = packages_info_dir..dtw.generate_sha(props.name)
     if dtw.isdir(package_info_dir) then
-        return true,"already_exists"
+        if not props.force then
+            return true,"already_exists"
+        end
+        dtw.remove_any(package_info_dir)
     end
     
     dtw.write_file(package_info_dir.."/name.txt", props.name)
