@@ -27,7 +27,7 @@ DESCRIPITION
 
 
 %install
-mkdir -p %{buildroot}/usr/local/bin
+mkdir -p %{buildroot}/bin
 cp %{_sourcedir}/pushblind.out   %{buildroot}/bin/PROJECT_NAME
 chmod +x %{buildroot}/bin/PROJECT_NAME
 %files
