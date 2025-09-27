@@ -1,6 +1,7 @@
 function vibescript_extension_internal_main()
-     private_vibescript.configure_props_functions()
     private_vibescript.configure_paths()
+
+    private_vibescript.configure_props_functions()
      private_vibescript.configure_newRawLLMFunction()
 
     local action =   argv.get_next_unused()
