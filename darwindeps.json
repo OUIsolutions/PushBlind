@@ -3,6 +3,7 @@
         "type": "gitrelease",
         "repo": "OUIsolutions/VibeScript",
         "file": "amalgamation.c",
-        "dest": "dependencies/vibescript.c"
+        "dest": "dependencies/vibescript.c",
+        "tag":"0.38.0"
     }
 ]
