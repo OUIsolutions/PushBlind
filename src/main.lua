@@ -61,7 +61,7 @@ function vibescript_extension_internal_main()
     if package_name == "current" then 
         local package_name = dtw.load_file(".pushblind")
         if not package_name then
-            print(private_vibescript.RED.."No current package set. Use 'pushblind add <package_name>' to set the current package."..private_vibescript.RESET)
+            print(private_vibescript.RED.."No current package set. create a .pushblind file with the package name"..private_vibescript.RESET)
             return 1
         end
     end
