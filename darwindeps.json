@@ -4,6 +4,6 @@
         "repo": "OUIsolutions/VibeScript",
         "file": "amalgamation.c",
         "dest": "dependencies/vibescript.c",
-        "tag":"0.38.0"
+        "tag":"0.41.0"
     }
 ]
