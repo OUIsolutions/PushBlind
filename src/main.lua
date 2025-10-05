@@ -48,7 +48,7 @@ function vibescript_extension_internal_main()
     end
   
     if action == "version" or action == "--version" or action == "-v" then
-        print("PushBlind version: 0.7.1")
+        print("PushBlind version: 0.8.0")
         return 0
     end
     
@@ -65,7 +65,7 @@ function vibescript_extension_internal_main()
             return 1
         end
     end
-    
+
     return PrivatePushBlind_run_action(package_name, action)
 end 
 
