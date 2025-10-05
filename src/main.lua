@@ -18,7 +18,7 @@ function vibescript_extension_internal_main()
           set_prop(prop_key, prop_value)
           return  0
      end 
-     
+
      if action == "get_prop" then 
           local prop_key = argv.get_next_unused()
           local prop_value = get_prop(prop_key)
@@ -57,6 +57,15 @@ function vibescript_extension_internal_main()
         print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
         return 1
     end
+
+    if package_name == "current" then 
+        local package_name = dtw.load_file(".pushblind")
+        if not package_name then
+            print(private_vibescript.RED.."No current package set. Use 'pushblind add <package_name>' to set the current package."..private_vibescript.RESET)
+            return 1
+        end
+    end
+    
     return PrivatePushBlind_run_action(package_name, action)
 end 
 
