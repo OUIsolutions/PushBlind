@@ -12,6 +12,24 @@ function vibescript_extension_internal_main()
         return PrivatePushBlind_pull_command()
     end
 
+    if action == "set_prop" then 
+          local prop_key = argv.get_next_unused()
+          local prop_value = argv.get_next_unused()
+          set_prop(prop_key, prop_value)
+          return  0
+     end 
+     
+     if action == "get_prop" then 
+          local prop_key = argv.get_next_unused()
+          local prop_value = get_prop(prop_key)
+          if not prop_value then
+               print(private_vibescript.RED.."Property not found: "..prop_key..private_vibescript.RESET)
+          else
+               print(private_vibescript.GREEN..prop_value..private_vibescript.RESET)
+          end
+          return 0
+     end
+
 
      PrivatePushBlind_Configure_entries()
 
