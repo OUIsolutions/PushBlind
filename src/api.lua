@@ -92,7 +92,7 @@ function PushBlind.run_action(name, action_name,args)
 
     local filename = dtw.load_file(package_info_dir.."/filename.txt")
     local filename_path = absolute_repo_dir.."/"..filename
-    script_dir_name = dtw.newPath(filename).get_dir()
+    script_dir_name = dtw.newPath(filename_path).get_dir()
 
     local ok, error = os.execute("cd "..absolute_repo_dir.." && "..PUSH_BLIND_PULL_COMMAND)
     if not ok then
@@ -103,7 +103,7 @@ function PushBlind.run_action(name, action_name,args)
     if not ok then
         return false,error
     end
-    local ok,error = pcall(PushBlind.actions[action_name],absolute_repo_dir,args)
+    local ok,error = pcall(PushBlind.actions[action_name],script_dir_name,args)
     if not ok then
         return false,error
     end
