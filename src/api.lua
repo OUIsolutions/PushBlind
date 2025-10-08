@@ -88,6 +88,7 @@ function PushBlind.run_action(name, action_name,args)
     PushBlind.repo_dir = repo_dir
     PushBlind.same  = PushBlind.repo_dir
     local absolute_repo_dir = pushblind_repos_dir..repo_dir
+    script_dir_name = absolute_repo_dir
     local filename = dtw.load_file(package_info_dir.."/filename.txt")
     local filename_path = absolute_repo_dir.."/"..filename
     local ok, error = os.execute("cd "..absolute_repo_dir.." && "..PUSH_BLIND_PULL_COMMAND)
