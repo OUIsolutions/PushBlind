@@ -3,7 +3,7 @@
 <div align="center">
 
 # PushBlind
-![Lua Logo](https://img.shields.io/badge/PushBlind-0.5.0-blue?style=for-the-badge&logo=lua)
+![Lua Logo](https://img.shields.io/badge/PushBlind-0.10.0-blue?style=for-the-badge&logo=lua)
 [![GitHub Release](https://img.shields.io/github/release/OUIsolutions/PushBlind.svg?style=for-the-badge)](https://github.com/OUIsolutions/PushBlind/releases)
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](https://github.com/OUIsolutions/PushBlind/blob/main/LICENSE)
 ![Status](https://img.shields.io/badge/Status-Alpha-orange?style=for-the-badge)
@@ -58,11 +58,11 @@ Want to create your own packages for PushBlind? Check the `package_sample/` dire
 
 |  **File**                                                                                                           | **What is**                                |
 |---------------------------------------------------------------------------------------------------------------------|--------------------------------------------|
-|[pushblind.out](https://github.com/OUIsolutions/PushBlind/releases/download/0.5.0/pushblind.out)                   | Linux Static Binary                        |
-|[pushblindi32.exe](https://github.com/OUIsolutions/PushBlind/releases/download/0.5.0/pushblindi32.exe)               | Windows 32-bit Binary                      |
-|[pushblind.deb](https://github.com/OUIsolutions/PushBlind/releases/download/0.5.0/pushblind.deb)                   | Debian Package                             |
-|[pushblind.rpm](https://github.com/OUIsolutions/PushBlind/releases/download/0.5.0/pushblind.rpm)                   | RPM Package                                |
-|[extension.c](https://github.com/OUIsolutions/PushBlind/releases/download/0.5.0/extension.c)                       | VibeScript Extension Source                |
+|[pushblind.out](https://github.com/OUIsolutions/PushBlind/releases/download/0.10.0/pushblind.out)                   | Linux Static Binary                        |
+|[pushblindi32.exe](https://github.com/OUIsolutions/PushBlind/releases/download/0.10.0/pushblindi32.exe)               | Windows 32-bit Binary                      |
+|[pushblind.deb](https://github.com/OUIsolutions/PushBlind/releases/download/0.10.0/pushblind.deb)                   | Debian Package                             |
+|[pushblind.rpm](https://github.com/OUIsolutions/PushBlind/releases/download/0.10.0/pushblind.rpm)                   | RPM Package                                |
+|[extension.c](https://github.com/OUIsolutions/PushBlind/releases/download/0.10.0/extension.c)                       | VibeScript Extension Source                |
 
 ## Installation and Usage Documentation
 
