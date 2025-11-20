@@ -1,9 +1,8 @@
-[
-    {
-        "type": "gitrelease",
-        "repo": "OUIsolutions/VibeScript",
-        "file": "amalgamation.c",
-        "dest": "dependencies/vibescript.c",
-        "tag":"0.41.0"
-    }
-]
+[{
+		"dest":	"dependencies/vibescript.c",
+		"file":	"amalgamation.c",
+		"repo":	"OUIsolutions/VibeScript",
+		"tag":	"0.46.0",
+		"type":	"gitrelease",
+		"updated_at":	"2025-11-10T07:27:25Z"
+	}]
