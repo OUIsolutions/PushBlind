@@ -76,49 +76,48 @@ end
 
 function PushBlind.run_action(name, action_name,args)
     local home = get_home()
-  
+
 
     local packages_info_dir  = home.."/"..PUSH_BLIND_LOCATION.."/packages/"
     local package_info_dir = packages_info_dir..dtw.generate_sha(name)
     if not dtw.isdir(package_info_dir) then
-        return false,"not_found"
+        error("not_found")
     end
     local pushblind_repos_dir = home.."/"..PUSH_BLIND_LOCATION.."/repos/"
     local repo_dir = dtw.load_file(package_info_dir.."/repo.txt")
     PushBlind.repo_dir = repo_dir
     PushBlind.same  = PushBlind.repo_dir
-    
+
     local absolute_repo_dir = pushblind_repos_dir..repo_dir
 
     local filename = dtw.load_file(package_info_dir.."/filename.txt")
     local filename_path = absolute_repo_dir.."/"..filename
     script_dir_name = dtw.newPath(filename_path).get_dir()
 
-    local ok, error = os.execute("cd "..absolute_repo_dir.." && "..PUSH_BLIND_PULL_COMMAND)
+    local ok, err = os.execute("cd "..absolute_repo_dir.." && "..PUSH_BLIND_PULL_COMMAND)
     if not ok then
-        return false,"impossible to execute command: "..PUSH_BLIND_PULL_COMMAND
-    end
-    
-    local ok,error = pcall(dofile,filename_path)
-    if not ok then
-        return false,error
-    end
-    local ok,error = pcall(PushBlind.actions[action_name],script_dir_name,args)
-    if not ok then
-        return false,error
+        error("impossible to execute command: "..PUSH_BLIND_PULL_COMMAND)
     end
 
-    return true,"runned"
+    local ok,err = pcall(dofile,filename_path)
+    if not ok then
+        error(err)
+    end
+    local ok,err = pcall(PushBlind.actions[action_name],script_dir_name,args)
+    if not ok then
+        error(err)
+    end
 end
 
 
 function PushBlind.remove_package(repo)
     local home = get_home()
-    PushBlind.run_action(repo,"remove")
+    -- Run the remove action, but continue even if it fails
+    pcall(PushBlind.run_action,repo,"remove")
     local packages_info_dir  = home.."/"..PUSH_BLIND_LOCATION.."/packages/"
     local package_info_dir = packages_info_dir..dtw.generate_sha(repo)
     if not dtw.isdir(package_info_dir) then
-        return false,"not_found"
+        error("not_found")
     end
     local pushblind_repos_dir = home.."/"..PUSH_BLIND_LOCATION.."/repos/"
     local repo_dir = dtw.load_file(package_info_dir.."/repo.txt")
@@ -137,17 +136,15 @@ function PushBlind.remove_package(repo)
         local absolute_repo_dir = pushblind_repos_dir..repo_dir
         dtw.remove_any(absolute_repo_dir)
     end
-
-    return true,"removed"
 end
 
 
 
 function PushBlind.install_package(repo)
-  return  PushBlind.run_action(repo,"install")
+    PushBlind.run_action(repo,"install")
 end
 
 function PushBlind.update_package(repo)
-   return  PushBlind.run_action(repo,"update")    
+    PushBlind.run_action(repo,"update")
 end
 

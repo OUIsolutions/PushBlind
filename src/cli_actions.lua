@@ -46,10 +46,10 @@ end
 
 function PrivatePushBlind_run_action(name,action)
 
-    local ok,result = PushBlind.run_action(name,action)
+    local ok,err = pcall(PushBlind.run_action,name,action)
 
     if not ok then
-        print(private_vibescript.RED.."Failed to run action "..action.." on package "..name..". Error: "..result..private_vibescript.RESET)
+        print(private_vibescript.RED.."Failed to run action "..action.." on package "..name..". Error: "..err..private_vibescript.RESET)
         return 1
     end
 
@@ -72,9 +72,9 @@ function PrivatePushBlind_remove_package()
         print(private_vibescript.RED.."No package name provided"..private_vibescript.RESET)
         return 1
     end
-    local ok,error = PushBlind.remove_package(name)
+    local ok,err = pcall(PushBlind.remove_package,name)
     if not ok then
-        print(private_vibescript.RED.."Failed to remove package "..name..". Error: "..error..private_vibescript.RESET)
+        print(private_vibescript.RED.."Failed to remove package "..name..". Error: "..err..private_vibescript.RESET)
         return 1
     end
     return 0
