@@ -53,7 +53,35 @@ PushBlind is designed for developers who need to:
 Want to create your own packages for PushBlind? Check the `package_sample/` directory for examples showing how to create package definitions with action functions using the `PushBlind.actions` namespace.
 
 ---
+## Quick Instalation
+### Mac OS 
+```bash
+curl -L https://github.com/OUIsolutions/PushBlind/releases/download/0.10.0/pushblind_extension.c -o pushblind.c 
+curl -L https://github.com/OUIsolutions/VibeScript/releases/download/0.47.0/amalgamation.c -o vibescript.c
+gcc vibescript.c \
+    -DVIBE_EXTENSION_MODULE=\"pushblind.c\" \
+    -DVIBE_EXTENSION_FUNC=pushblind \
+    -DVIBE_EXTENSION_LIB_NAME=\"pushblind\" \
+    -o pushblind
 
+#copy the bin to mac os path dir 
+
+cp pushblind /usr/local/bin/pushblind
+```
+## Linux
+```bash
+curl -L https://github.com/OUIsolutions/PushBlind/releases/download/0.10.0/pushblind_extension.c -o pushblind.c 
+curl -L https://github.com/OUIsolutions/VibeScript/releases/download/0.47.0/amalgamation.c -o vibescript.c
+gcc vibescript.c \
+    -DVIBE_EXTENSION_MODULE=\"pushblind.c\" \
+    -DVIBE_EXTENSION_FUNC=pushblind \
+    -DVIBE_EXTENSION_LIB_NAME=\"pushblind\" \
+    -o pushblind
+
+#copy the bin to linux path dir 
+
+cp pushblind /usr/bin/pushblind
+```
 ## Releases
 
 |  **File**                                                                                                           | **What is**                                |
