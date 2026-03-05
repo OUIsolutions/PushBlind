@@ -85,6 +85,13 @@ function PushBlind.run_action(name, action_name,args)
     end
     local pushblind_repos_dir = home.."/"..PUSH_BLIND_LOCATION.."/repos/"
     local repo_dir = dtw.load_file(package_info_dir.."/repo.txt")
+
+
+
+
+
+    local old_repo_dir = PushBlind.repo_dir
+    local old_same = PushBlind.same
     PushBlind.repo_dir = repo_dir
     PushBlind.same  = PushBlind.repo_dir
     
@@ -96,18 +103,26 @@ function PushBlind.run_action(name, action_name,args)
 
     local ok, error = os.execute("cd "..absolute_repo_dir.." && "..PUSH_BLIND_PULL_COMMAND)
     if not ok then
+        PushBlind.repo_dir = old_repo_dir
+        PushBlind.same  = old_same
         return false,"impossible to execute command: "..PUSH_BLIND_PULL_COMMAND
     end
     
     local ok,error = pcall(dofile,filename_path)
     if not ok then
+        PushBlind.repo_dir = old_repo_dir
+        PushBlind.same  = old_same
         return false,error
     end
     local ok,error = pcall(PushBlind.actions[action_name],script_dir_name,args)
     if not ok then
+        PushBlind.repo_dir = old_repo_dir
+        PushBlind.same  = old_same
         return false,error
     end
 
+    PushBlind.repo_dir = old_repo_dir
+    PushBlind.same  = old_same
     return true,"runned"
 end
 
