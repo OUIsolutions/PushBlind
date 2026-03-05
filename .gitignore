@@ -4,6 +4,7 @@ release
 dependencies
 pushblind
 .cache
+quick_install.sh
 ouivibe.out
 package_sample
 readme_sample.md
