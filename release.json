@@ -4,14 +4,14 @@
 		"release/pushblind.deb",
 		"release/pushblind.out",
 		"release/pushblind.rpm",
-		"release/ouivibei32.exe"
+		"release/pushblindi32.exe"
 	],
 	"description": "fix update package",
 	"release": "{BIG_VERSION}.{SMALL_VERSION}.{PATCH_VERSION}",
 	"replacers": {
 		"BIG_VERSION": "0",
 		"SMALL_VERSION": "10",
-		"PATCH_VERSION": "1"
+		"PATCH_VERSION": "2"
 	},
 	"tag": "{BIG_VERSION}.{SMALL_VERSION}.{PATCH_VERSION}"
 }

@@ -41,13 +41,13 @@ Description: SUMARY
     image.provider = CONTANIZER
 
     image.start({
-        flags = { "-it" },
+        flags = {},
         volumes = {
             { "./.cache/debian_static_build/project", "/project" },
             { "./release",                          "/release" },
 
         },
-        command = "chmod 755 /project/DEBIAN/postinst &&  dpkg-deb --build /project /release/pushblind.deb"
+        command = "chmod 755 /project/DEBIAN && chmod 755 /project/DEBIAN/postinst && dpkg-deb --build /project /release/pushblind.deb"
     })
 end
 darwin.add_recipe({
