@@ -2,7 +2,7 @@
 		"dest":	"dependencies/vibescript.c",
 		"file":	"amalgamation.c",
 		"repo":	"OUIsolutions/VibeScript",
-		"tag":	"0.46.0",
+		"tag":	"0.47.1",
 		"type":	"gitrelease",
-		"updated_at":	"2025-11-10T07:27:25Z"
+		"updated_at":	"2026-04-04T18:41:39Z"
 	}]
