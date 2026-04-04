@@ -28,6 +28,6 @@ darwin.add_recipe({
     name=".exe",
     requires={"extension"},
     description="make a .exe of the project",
-    outs={"release/ouivibei32.exe"},
+    outs={"release/pushblindi32.exe"},
     callback=windowsi32_build
 })
