@@ -68,7 +68,7 @@ gcc vibescript.c \
 
 
 chmod +x pushblind
- cp pushblind /usr/local/bin/pushblind
+sudo  cp pushblind /usr/local/bin/pushblind
 
 ```
 ## Linux
