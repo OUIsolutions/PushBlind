@@ -67,8 +67,9 @@ gcc vibescript.c \
 #copy the bin to mac os path dir 
 
 
-
+chmod +x pushblind
 cp pushblind /usr/local/bin/pushblind
+
 ```
 ## Linux
 ```bash
