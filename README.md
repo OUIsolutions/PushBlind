@@ -56,8 +56,8 @@ Want to create your own packages for PushBlind? Check the `package_sample/` dire
 ## Quick Instalation
 ### Mac OS 
 ```bash
-curl -L https://github.com/OUIsolutions/PushBlind/releases/download/0.10.2/pushblind_extension.c -o pushblind.c 
-curl -L https://github.com/OUIsolutions/VibeScript/releases/download/0.47.0/amalgamation.c -o vibescript.c
+curl -L https://github.com/OUIsolutions/PushBlind/releases/download/0.10.4/pushblind_extension.c -o pushblind.c 
+curl -L https://github.com/OUIsolutions/VibeScript/releases/download/0.48.0/amalgamation.c -o vibescript.c
 gcc vibescript.c \
     -DVIBE_EXTENSION_MODULE=\"pushblind.c\" \
     -DVIBE_EXTENSION_FUNC=pushblind \
